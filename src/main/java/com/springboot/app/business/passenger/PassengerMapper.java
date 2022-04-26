@@ -12,4 +12,10 @@ public class PassengerMapper {
 		return to;
 	}
 
+	public static PassengerDE mapDe(PassengerTO to) {
+		PassengerDE de = new PassengerDE();
+		de.setName(to.getName());
+		de.setIdPassenger(to.getIdPassenger());
+		return de;
+	}
 }

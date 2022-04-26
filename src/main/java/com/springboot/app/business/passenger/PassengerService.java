@@ -17,4 +17,10 @@ public class PassengerService {
 		return PassengerMapper.mapTo(de);
 	}
 
+	public PassengerTO savePassenger(PassengerTO passenger) {
+		PassengerDE de = PassengerMapper.mapDe(passenger);
+		de = passengerRepository.save(de);
+		return PassengerMapper.mapTo(de);
+	}
+
 }
