@@ -18,7 +18,7 @@ public class FlightController {
 	private FlightService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getPassenger(@RequestParam(value = "id") int id) {
+	public ResponseEntity<?> getFlight(@RequestParam(value = "id") int id) {
 		try {
 			FlightTO flight = this.service.getFlight(id);
 			return ResponseEntity.ok(flight);
