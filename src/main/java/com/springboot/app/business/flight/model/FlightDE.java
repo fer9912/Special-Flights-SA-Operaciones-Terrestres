@@ -44,13 +44,13 @@ public class FlightDE implements Serializable {
 	@Column(name = "arrival", length = 20, nullable = true)
 	private Date arrival;
 
-	@Column(name = "crew", length = 1000, nullable = true)
-	private String crew;
-
 	@Column(name = "route", length = 45, nullable = true)
 	private String route;
 
 	@Column(name = "status", length = 45, nullable = true)
 	private String status;
+
+	@Column(name = "aircraft", length = 30, nullable = true)
+	private String aircraft;
 
 }

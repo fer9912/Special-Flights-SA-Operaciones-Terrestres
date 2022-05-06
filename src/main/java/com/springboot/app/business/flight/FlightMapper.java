@@ -12,7 +12,7 @@ public class FlightMapper {
 		to.setDestination(de.getDestination());
 		to.setDeparture(de.getDeparture());
 		to.setArrival(de.getArrival());
-		to.setCrew(de.getCrew().split(","));
+		to.setAircraft(de.getAircraft());
 		to.setRoute(de.getRoute());
 		to.setStatus(de.getStatus());
 
@@ -26,7 +26,7 @@ public class FlightMapper {
 		de.setDestination(to.getDestination());
 		de.setDeparture(to.getDeparture());
 		de.setArrival(to.getArrival());
-		de.setCrew(to.getCrew().toString());
+		de.setAircraft(to.getAircraft());
 		de.setRoute(to.getRoute());
 		de.setStatus(to.getStatus());
 

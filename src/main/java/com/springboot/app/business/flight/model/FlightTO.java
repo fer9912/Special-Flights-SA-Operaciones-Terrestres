@@ -13,7 +13,7 @@ public class FlightTO {
 	private String destination;
 	private Date departure;
 	private Date arrival;
-	private String[] crew;
+	private String aircraft;
 	private String route;
 	private String status;
 
