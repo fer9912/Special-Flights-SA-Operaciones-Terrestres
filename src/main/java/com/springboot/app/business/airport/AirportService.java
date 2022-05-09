@@ -15,9 +15,7 @@ public class AirportService {
 	private AirportRepository airportRepository;
 
 	public List<AirportTO> getAirports() {
-		System.out.println(":)");
 		List<AirportDE> des = airportRepository.findAll();
-		System.out.println(des.toString());
 		return AirportMapper.mapTOList(des);
 	}
 
