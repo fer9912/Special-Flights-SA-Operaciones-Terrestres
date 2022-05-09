@@ -17,4 +17,9 @@ public class CheckFlightService {
 		return CheckFlightMapper.mapTo(de);
 	}
 
+	public CheckFlightTO saveCheckFlight(CheckFlightTO checkFlight) {
+		CheckFlightDE de = CheckFlightMapper.mapDe(checkFlight);
+		de = checkFlightRepository.save(de);
+		return CheckFlightMapper.mapTo(de);
+	}
 }
