@@ -21,14 +21,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "checkFlight")
+@Table(name = "check_flight")
 @Component
 public class CheckFlightDE implements Serializable {
 
 	private static final long serialVersionUID = 6094407212788597216L;
 
 	@Id
-	@Column(name = "id_checkFlight", nullable = false)
+	@Column(name = "id_check_flight", nullable = false)
 	private int idCheckFlight;
 
 	@Column(name = "a1", length = 10, nullable = true)
