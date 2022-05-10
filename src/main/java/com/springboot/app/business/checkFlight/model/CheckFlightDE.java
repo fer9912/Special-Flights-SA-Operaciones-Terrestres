@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "checkflight")
+@Table(name = "checkFlight")
 @Component
 public class CheckFlightDE implements Serializable {
 

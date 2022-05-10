@@ -14,7 +14,7 @@ import com.springboot.app.business.checkFlight.model.CheckFlightTO;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("checkflight")
+@RequestMapping("checkFlight")
 public class CheckFlightController {
 	@Autowired
 	private CheckFlightService service;
