@@ -28,7 +28,7 @@ public class CheckFlightDE implements Serializable {
 	private static final long serialVersionUID = 6094407212788597216L;
 
 	@Id
-	@Column(name = "id_checkflight", nullable = false)
+	@Column(name = "id_checkFlight", nullable = false)
 	private int idCheckFlight;
 
 	@Column(name = "a1", length = 10, nullable = true)
