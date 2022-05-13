@@ -29,7 +29,7 @@ public class PassengerController {
 		}
 	}
 
-	@GetMapping("/getByFlight")
+	@GetMapping("/get")
 	public ResponseEntity<?> getPassengersByIdFlight(@RequestParam(value = "idFlight") int idFlight) {
 		try {
 			List<PassengerTO> passengers = this.service.getPassengersByIdFlight(idFlight);
