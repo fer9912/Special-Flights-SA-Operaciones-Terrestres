@@ -25,7 +25,7 @@ public class PassengerMapper {
 		to.setMenuType(de.getMenuType());
 		to.setMedicalCondition(de.getMedicalCondition());
 		to.setBaggage(de.getBaggage());
-		to.setFlight(de.getFlight());
+		to.setIdFlight(de.getIdFlight());
 		to.setStatus(de.getStatus());
 		return to;
 	}
@@ -43,7 +43,7 @@ public class PassengerMapper {
 		de.setMenuType(to.getMenuType());
 		de.setMedicalCondition(to.getMedicalCondition());
 		de.setBaggage(to.getBaggage());
-		de.setFlight(to.getFlight());
+		de.setIdFlight(to.getIdFlight());
 		de.setStatus(to.getStatus());
 		return de;
 	}

@@ -62,7 +62,7 @@ public class PassengerDE implements Serializable {
 	private String baggage;
 
 	@Column(name = "flight", nullable = true)
-	private int flight;
+	private int idFlight;
 
 	@Column(name = "status", length = 45, nullable = true)
 	private String status;
