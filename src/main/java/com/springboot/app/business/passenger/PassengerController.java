@@ -42,9 +42,9 @@ public class PassengerController {
 	}
 
 	@PostMapping("/save")
-	public ResponseEntity<?> save(@RequestBody PassengerTO checkFlight) {
+	public ResponseEntity<?> save(@RequestBody PassengerTO passenger) {
 		try {
-			PassengerTO response = this.service.savePassenger(checkFlight);
+			PassengerTO response = this.service.savePassenger(passenger);
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Error to save passenger");
