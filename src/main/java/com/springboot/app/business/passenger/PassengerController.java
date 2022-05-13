@@ -1,11 +1,11 @@
 package com.springboot.app.business.passenger;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,13 +29,14 @@ public class PassengerController {
 		}
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<?> save(@RequestBody PassengerTO passenger) {
+	@GetMapping("/getByFlight")
+	public ResponseEntity<?> getPassengersByIdFlight(@RequestParam(value = "idFlight") int idFlight) {
 		try {
-			PassengerTO response = this.service.savePassenger(passenger);
-			return ResponseEntity.ok(response);
+			List<PassengerTO> passengers = this.service.getPassengersByIdFlight(idFlight);
+			return ResponseEntity.ok(passengers);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Error to save passenger");
+			return ResponseEntity.internalServerError().body("Error to get passengers by flight");
 		}
 	}
+
 }

@@ -13,5 +13,6 @@ public interface PassengerRepository extends JpaRepository<PassengerDE, Long>, J
 
 	PassengerDE findByIdPassenger(int idPassenger);
 
-	List<PassengerDE> findByName(String name);
+	List<PassengerDE> findPassengersByIdFlight(int idFlight);
+
 }

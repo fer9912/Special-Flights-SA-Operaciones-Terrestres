@@ -34,4 +34,37 @@ public class PassengerDE implements Serializable {
 	@Column(name = "name", length = 45, nullable = false)
 	private String name;
 
+	@Column(name = "doc_type", length = 45, nullable = false)
+	private String docType;
+
+	@Column(name = "doc_number", length = 45, nullable = false)
+	private String docNumber;
+
+	@Column(name = "nationality", length = 45, nullable = false)
+	private String nationality;
+
+	@Column(name = "age", length = 45, nullable = true)
+	private String age;
+
+	@Column(name = "sex", length = 45, nullable = true)
+	private String sex;
+
+	@Column(name = "class", length = 45, nullable = true)
+	private String classFlight;
+
+	@Column(name = "menu_type", length = 45, nullable = true)
+	private String menuType;
+
+	@Column(name = "medical_condition", length = 45, nullable = true)
+	private String medicalCondition;
+
+	@Column(name = "baggage", length = 45, nullable = true)
+	private String baggage;
+
+	@Column(name = "flight", nullable = true)
+	private int flight;
+
+	@Column(name = "status", length = 45, nullable = true)
+	private String status;
+
 }
