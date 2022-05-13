@@ -20,7 +20,7 @@ public class PassengerService {
 	}
 
 	public List<PassengerTO> getPassengersByIdFlight(int idFlight) {
-		List<PassengerDE> des = passengerRepository.findPassengersByIdFlight(idFlight);
+		List<PassengerDE> des = passengerRepository.findPassengerByIdFlight(idFlight);
 		return PassengerMapper.mapTOList(des);
 	}
 
