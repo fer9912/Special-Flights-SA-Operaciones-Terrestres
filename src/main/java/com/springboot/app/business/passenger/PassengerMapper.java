@@ -30,4 +30,22 @@ public class PassengerMapper {
 		return to;
 	}
 
+	public static PassengerDE mapDE(PassengerTO to) {
+		PassengerDE de = new PassengerDE();
+		de.setName(to.getName());
+		de.setIdPassenger(to.getIdPassenger());
+		de.setDocType(to.getDocType());
+		de.setDocNumber(to.getDocNumber());
+		de.setNationality(to.getNationality());
+		de.setAge(to.getAge());
+		de.setSex(to.getSex());
+		de.setClassFlight(to.getClassFlight());
+		de.setMenuType(to.getMenuType());
+		de.setMedicalCondition(to.getMedicalCondition());
+		de.setBaggage(to.getBaggage());
+		de.setFlight(to.getFlight());
+		de.setStatus(to.getStatus());
+		return de;
+	}
+
 }
