@@ -1,7 +1,5 @@
 package com.springboot.app.business.passenger;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,16 +26,6 @@ public class PassengerController {
 			return ResponseEntity.ok(passenger);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invalid or empty passenger id");
-		}
-	}
-
-	@GetMapping("/get")
-	public ResponseEntity<?> getPassengersByIdFlight(@RequestParam(value = "idFlight") int idFlight) {
-		try {
-			List<PassengerTO> passengers = this.service.getPassengersByIdFlight(idFlight);
-			return ResponseEntity.ok(passengers);
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("Error to get passengers by flight");
 		}
 	}
 

@@ -1,16 +1,9 @@
 package com.springboot.app.business.passenger;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.springboot.app.business.passenger.model.PassengerDE;
 import com.springboot.app.business.passenger.model.PassengerTO;
 
 public class PassengerMapper {
-
-	public static List<PassengerTO> mapTOList(List<PassengerDE> des) {
-		return des.stream().map(PassengerMapper::mapTo).collect(Collectors.toList());
-	}
 
 	public static PassengerTO mapTo(PassengerDE de) {
 		PassengerTO to = new PassengerTO();

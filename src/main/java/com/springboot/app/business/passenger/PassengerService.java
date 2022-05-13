@@ -1,7 +1,5 @@
 package com.springboot.app.business.passenger;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +15,6 @@ public class PassengerService {
 	public PassengerTO getPassenger(int idPassenger) {
 		PassengerDE de = passengerRepository.findByIdPassenger(idPassenger);
 		return PassengerMapper.mapTo(de);
-	}
-
-	public List<PassengerTO> getPassengersByIdFlight(int idFlight) {
-		List<PassengerDE> des = passengerRepository.findByIdFlight(idFlight);
-		return PassengerMapper.mapTOList(des);
 	}
 
 	public PassengerTO savePassenger(PassengerTO passenger) {
