@@ -20,6 +20,8 @@ public class AirportMapper {
 		to.setName(de.getName());
 		to.setOaci(de.getOaci());
 		to.setState(de.getState());
+		to.setLat(de.getLat());
+		to.setLon(de.getLon());
 		return to;
 
 	}

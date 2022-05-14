@@ -62,6 +62,7 @@ public class CheckFlightMapper {
 		to.setD2(de.isD2());
 		to.setD3(de.isD3());
 		to.setE1(de.isE1());
+		to.setCode(de.getCode());
 
 		return to;
 	}
@@ -123,6 +124,7 @@ public class CheckFlightMapper {
 		de.setD2(to.isD2());
 		de.setD3(to.isD3());
 		de.setE1(to.isE1());
+		de.setCode(to.getCode());
 
 		return de;
 	}

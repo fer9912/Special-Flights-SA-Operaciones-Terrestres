@@ -19,4 +19,9 @@ public class AirportService {
 		return AirportMapper.mapTOList(des);
 	}
 
+	public AirportTO getByCode(String iata) {
+		AirportDE de = airportRepository.findByIata(iata);
+		return AirportMapper.mapTO(de);
+	}
+
 }

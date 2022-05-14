@@ -1,5 +1,7 @@
 package com.springboot.app.business.flight;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,12 +20,22 @@ public class FlightController {
 	private FlightService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getFlight(@RequestParam(value = "id") int id) {
+	public ResponseEntity<?> getFlight(@RequestParam(value = "code") String code) {
 		try {
-			FlightTO flight = this.service.getFlight(id);
+			FlightTO flight = this.service.getFlight(code);
 			return ResponseEntity.ok(flight);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Invalid or empty flight id");
+			return ResponseEntity.badRequest().body("Invalid or empty flight code");
+		}
+	}
+
+	@GetMapping("/getAll")
+	public ResponseEntity<?> getFlights() {
+		try {
+			List<FlightTO> flights = this.service.getFlights();
+			return ResponseEntity.ok(flights);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body("Error to get flights");
 		}
 	}
 

@@ -9,4 +9,5 @@ import com.springboot.app.business.airport.model.AirportDE;
 @Repository
 public interface AirportRepository extends JpaRepository<AirportDE, Long>, JpaSpecificationExecutor<AirportDE> {
 
+	AirportDE findByIata(String iata);
 }

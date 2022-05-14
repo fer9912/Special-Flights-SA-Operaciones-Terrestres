@@ -9,4 +9,5 @@ import com.springboot.app.business.aircraft.model.AircraftDE;
 @Repository
 public interface AircraftRepository extends JpaRepository<AircraftDE, Long>, JpaSpecificationExecutor<AircraftDE> {
 
+	AircraftDE findById(int id);
 }

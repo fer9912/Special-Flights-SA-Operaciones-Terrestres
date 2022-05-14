@@ -6,10 +6,11 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AircraftTO {
-	private String code;
+	private int id;
 	private String model;
 	private int fuelConsumption;
+	private int lubricantConsumption;
 	private int passengerCapacity;
 	private int weightTolerance;
-	private String crew;
+	private int maxDistance;
 }

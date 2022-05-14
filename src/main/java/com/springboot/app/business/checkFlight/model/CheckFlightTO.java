@@ -61,5 +61,6 @@ public class CheckFlightTO {
 	private boolean d2;
 	private boolean d3;
 	private boolean e1;
+	private String code;
 
 }

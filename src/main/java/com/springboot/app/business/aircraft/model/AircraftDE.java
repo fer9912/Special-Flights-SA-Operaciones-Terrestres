@@ -28,8 +28,8 @@ public class AircraftDE implements Serializable {
 	private static final long serialVersionUID = 6094407212788597216L;
 
 	@Id
-	@Column(name = "code", length = 30, nullable = false)
-	private String code;
+	@Column(name = "id", nullable = false)
+	private int id;
 
 	@Column(name = "model", length = 50, nullable = false)
 	private String model;
@@ -37,13 +37,16 @@ public class AircraftDE implements Serializable {
 	@Column(name = "fuel_consumption", nullable = false)
 	private int fuelConsumption;
 
+	@Column(name = "lubricant_consumption")
+	private int lubricantConsumption;
+
+	@Column(name = "max_distance")
+	private int maxDistance;
+
 	@Column(name = "passenger_capacity", nullable = false)
 	private int passengerCapacity;
 
 	@Column(name = "weight_tolerance", nullable = false)
 	private int weightTolerance;
-
-	@Column(name = "crew", length = 100, nullable = false)
-	private String crew;
 
 }

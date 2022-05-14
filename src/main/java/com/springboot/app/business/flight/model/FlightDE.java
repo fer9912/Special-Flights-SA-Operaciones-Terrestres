@@ -29,8 +29,8 @@ public class FlightDE implements Serializable {
 	private static final long serialVersionUID = 6094407212788597216L;
 
 	@Id
-	@Column(name = "id_flight", nullable = false)
-	private int idFlight;
+	@Column(name = "code", length = 100, nullable = true)
+	private String code;
 
 	@Column(name = "origin", length = 45, nullable = false)
 	private String origin;
@@ -38,19 +38,25 @@ public class FlightDE implements Serializable {
 	@Column(name = "destination", length = 45, nullable = false)
 	private String destination;
 
-	@Column(name = "departure", length = 20, nullable = true)
-	private Date departure;
+	@Column(name = "date", length = 20, nullable = true)
+	private Date date;
 
-	@Column(name = "arrival", length = 20, nullable = true)
-	private Date arrival;
-
-	@Column(name = "route", length = 45, nullable = true)
+	@Column(name = "route", length = 100, nullable = true)
 	private String route;
 
 	@Column(name = "status", length = 45, nullable = true)
 	private String status;
 
-	@Column(name = "aircraft", length = 30, nullable = true)
-	private String aircraft;
+	@Column(name = "company", length = 100, nullable = true)
+	private String company;
+
+	@Column(name = "day", length = 20, nullable = true)
+	private String day;
+
+	@Column(name = "hour", length = 100, nullable = true)
+	private String hour;
+
+	@Column(name = "aircraft", nullable = true)
+	private int aircraft;
 
 }

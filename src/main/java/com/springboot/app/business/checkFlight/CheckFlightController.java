@@ -20,11 +20,12 @@ public class CheckFlightController {
 	private CheckFlightService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "id") int id) {
+	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "code") String code) {
 		try {
-			CheckFlightTO checkFlight = this.service.getCheckFlight(id);
+			CheckFlightTO checkFlight = this.service.getCheckFlight(code);
 			return ResponseEntity.ok(checkFlight);
 		} catch (Exception e) {
+			System.out.println(e);
 			return ResponseEntity.badRequest().body("Invalid or empty checkFlight id");
 		}
 	}

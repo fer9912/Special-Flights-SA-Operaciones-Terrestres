@@ -8,13 +8,15 @@ import lombok.Setter;
 @Setter
 @Getter
 public class FlightTO {
-	private int idFlight;
+	private String code;
 	private String origin;
 	private String destination;
-	private Date departure;
-	private Date arrival;
-	private String aircraft;
+	private Date date;
 	private String route;
 	private String status;
+	private String company;
+	private String day;
+	private String hour;
+	private String aircraft;
 
 }

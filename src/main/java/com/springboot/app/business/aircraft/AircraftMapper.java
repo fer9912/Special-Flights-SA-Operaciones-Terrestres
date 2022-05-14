@@ -14,12 +14,13 @@ public class AircraftMapper {
 
 	public static AircraftTO mapTO(AircraftDE de) {
 		AircraftTO to = new AircraftTO();
-		to.setCode(de.getCode());
+		to.setId(de.getId());
 		to.setModel(de.getModel());
 		to.setFuelConsumption(de.getFuelConsumption());
-		to.setCrew(de.getCrew());
 		to.setPassengerCapacity(de.getPassengerCapacity());
 		to.setWeightTolerance(de.getWeightTolerance());
+		to.setLubricantConsumption(de.getLubricantConsumption());
+		to.setMaxDistance(de.getMaxDistance());
 		return to;
 
 	}

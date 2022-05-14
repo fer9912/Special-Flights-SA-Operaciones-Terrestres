@@ -46,4 +46,10 @@ public class AirportDE implements Serializable {
 	@Column(name = "OACI", length = 4, nullable = false)
 	private String oaci;
 
+	@Column(name = "lat")
+	private double lat;
+
+	@Column(name = "lon")
+	private double lon;
+
 }

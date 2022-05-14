@@ -12,4 +12,6 @@ public interface CheckFlightRepository
 
 	CheckFlightDE findByIdCheckFlight(int idCheckFlight);
 
+	CheckFlightDE findByCode(String code);
+
 }

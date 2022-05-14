@@ -12,8 +12,8 @@ public class CheckFlightService {
 	@Autowired
 	private CheckFlightRepository checkFlightRepository;
 
-	public CheckFlightTO getCheckFlight(int idCheckFlight) {
-		CheckFlightDE de = checkFlightRepository.findByIdCheckFlight(idCheckFlight);
+	public CheckFlightTO getCheckFlight(String code) {
+		CheckFlightDE de = checkFlightRepository.findByCode(code);
 		return CheckFlightMapper.mapTo(de);
 	}
 

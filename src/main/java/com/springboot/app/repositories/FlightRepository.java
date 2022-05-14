@@ -9,6 +9,6 @@ import com.springboot.app.business.flight.model.FlightDE;
 @Repository
 public interface FlightRepository extends JpaRepository<FlightDE, Long>, JpaSpecificationExecutor<FlightDE> {
 
-	FlightDE findByIdFlight(int idFlight);
+	FlightDE findByCode(String code);
 
 }

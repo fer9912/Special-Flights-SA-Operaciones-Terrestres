@@ -1,35 +1,50 @@
 package com.springboot.app.business.flight;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.springboot.app.business.aircraft.AircraftService;
 import com.springboot.app.business.flight.model.FlightDE;
 import com.springboot.app.business.flight.model.FlightTO;
 
+@Component
 public class FlightMapper {
+	@Autowired
+	AircraftService aircraftService;
 
-	public static FlightTO mapTo(FlightDE de) {
+	public FlightTO mapTo(FlightDE de) {
 		FlightTO to = new FlightTO();
+		to.setCode(de.getCode());
 		to.setOrigin(de.getOrigin());
-		to.setIdFlight(de.getIdFlight());
 		to.setDestination(de.getDestination());
-		to.setDeparture(de.getDeparture());
-		to.setArrival(de.getArrival());
-		to.setAircraft(de.getAircraft());
+		to.setDate(de.getDate());
+		to.setCompany(de.getCompany());
+		to.setDay(de.getDay());
+		to.setHour(de.getHour());
 		to.setRoute(de.getRoute());
 		to.setStatus(de.getStatus());
-
+		to.setAircraft(aircraftService.getAircraft(de.getAircraft()).getModel());
 		return to;
+	}
+
+	public List<FlightTO> mapTOList(List<FlightDE> des) {
+		return des.stream().map(d -> mapTo(d)).collect(Collectors.toList());
 	}
 
 	public static FlightDE mapDe(FlightTO to) {
 		FlightDE de = new FlightDE();
+		de.setCode(to.getCode());
 		de.setOrigin(to.getOrigin());
-		de.setIdFlight(to.getIdFlight());
 		de.setDestination(to.getDestination());
-		de.setDeparture(to.getDeparture());
-		de.setArrival(to.getArrival());
-		de.setAircraft(to.getAircraft());
+		de.setDate(to.getDate());
+		de.setCompany(to.getCompany());
+		de.setDay(to.getDay());
+		de.setHour(to.getHour());
 		de.setRoute(to.getRoute());
 		de.setStatus(to.getStatus());
-
 		return de;
 	}
 }

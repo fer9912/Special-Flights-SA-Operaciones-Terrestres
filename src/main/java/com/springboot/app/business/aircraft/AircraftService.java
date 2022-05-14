@@ -19,4 +19,9 @@ public class AircraftService {
 		return AircraftMapper.mapTOList(des);
 	}
 
+	public AircraftTO getAircraft(int id) {
+		AircraftDE de = this.aircraftRepository.findById(id);
+		return AircraftMapper.mapTO(de);
+	}
+
 }
