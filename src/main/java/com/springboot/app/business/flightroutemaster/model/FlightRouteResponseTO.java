@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 public class FlightRouteResponseTO {
 	private AircraftTO aircraft;
+	private List<AircraftTO> optimalAircrafts;
 	private int duration;
 	private int distance;
 	private List<AirportTO> route;

@@ -24,8 +24,8 @@ import com.springboot.app.utils.Util;
 
 @Service
 public class FlightRouteMasterService {
-	int gananciaPorPersona = 100;
-	int costoCombustiblePorLitro = 100;
+	int gananciaPorPersona = 50;
+	int costoCombustiblePorLitro = 150;
 	int costoLubricantePorLitro = 10;
 	int costoDeInsumosPorPersona = 28;
 	int promedioDePersonas = 0;
@@ -35,8 +35,8 @@ public class FlightRouteMasterService {
 	int distanciaDeViaje = 0;
 	List<AirportTO> airportsGlobal = new ArrayList<>();
 	List<Flight> flightsGlobal = new ArrayList<>();
-	int distance = -1;
-	int capacity = -1;
+	int distance = 13400;
+	int capacity = 290;
 
 	@Autowired
 	private AirportService airportService;
@@ -55,15 +55,19 @@ public class FlightRouteMasterService {
 		response.setDay(getWeekDay());
 		response.setDistance(getDistance(response.getRoute()));
 		response.setAircraft(request.getAircraft() != null ? request.getAircraft() : getOptimalAirCraft(response));
+		response.setOptimalAircrafts(getOptimalAirCrafts(response));
 		response.setDistance(getDistance(response.getRoute()));
 		return response;
 	}
 
 	private void setParametersToWeight(FlightRouteRequestTO request) {
 		flightsGlobal = this.apisRequests.getFlights();
+		promedioDePersonas = 120;
 		if (request.getAircraft() != null) {
 			AircraftTO aeronave = this.aircraftService.getAircraft(request.getAircraft().getId());
-			promedioDePersonas = aeronave.getPassengerCapacity() * 60 / 100;
+			if ((aeronave.getPassengerCapacity() * 60 / 100) < promedioDePersonas) {
+				promedioDePersonas = aeronave.getPassengerCapacity() * 60 / 100;
+			}
 			distance = aeronave.getMaxDistance();
 			capacity = aeronave.getPassengerCapacity();
 			listrosDeCombustibleXKilometro = aeronave.getFuelConsumption();
@@ -71,21 +75,39 @@ public class FlightRouteMasterService {
 
 		} else {
 			List<AircraftTO> aeronaves = this.aircraftService.getAircrafts();
-			promedioDePersonas = getPassengerAverageByAircrafts(aeronaves) * 60 / 100;
 			listrosDeCombustibleXKilometro = getFuelCAverageByAircrafts(aeronaves);
 			listrosDeLubricanteXMilKilometros = getLubricantCAverageByAircrafts(aeronaves);
 		}
 
 	}
 
+	private List<AircraftTO> getOptimalAirCrafts(FlightRouteResponseTO response) {
+		int distancia = response.getDistance();
+		int estimado = cantMaxPersonas(response);
+		List<AircraftTO> ret = new ArrayList<>();
+		List<AircraftTO> aeronaves = this.aircraftService.getAircrafts();
+		for (AircraftTO aeronave : aeronaves) {
+			if (estimado > this.capacity && aeronave.getModel().equals("Airbus 330-200 8")) {
+				ret.add(aeronave);
+			}
+			if (aeronave.getMaxDistance() > distancia + 300 && aeronave.getPassengerCapacity() > estimado) {
+				ret.add(aeronave);
+			}
+		}
+		return ret;
+	}
+
 	private AircraftTO getOptimalAirCraft(FlightRouteResponseTO response) {
 		int distancia = response.getDistance();
-		int x = response.getRoute().size() - 1;
-		int estimado = promedioDePersonas * x;
+		int estimado = cantMaxPersonas(response);
 		int maxDistance = Integer.MAX_VALUE;
 		AircraftTO ret = new AircraftTO();
 		List<AircraftTO> aeronaves = this.aircraftService.getAircrafts();
+
 		for (AircraftTO aeronave : aeronaves) {
+			if (estimado > this.capacity && aeronave.getModel().equals("Airbus 330-200 8")) {
+				ret = aeronave;
+			}
 			if (aeronave.getMaxDistance() > distancia + 300 && aeronave.getMaxDistance() < maxDistance
 					&& aeronave.getPassengerCapacity() > estimado) {
 				maxDistance = aeronave.getMaxDistance();
@@ -264,16 +286,7 @@ public class FlightRouteMasterService {
 		return ret / aeronaves.size();
 	}
 
-	private int getPassengerAverageByAircrafts(List<AircraftTO> aeronaves) {
-		int ret = 0;
-		for (AircraftTO aeronave : aeronaves) {
-			ret += aeronave.getPassengerCapacity();
-		}
-		return ret / aeronaves.size();
-	}
-
-	private int[] getValues(String start, String end, List<String> otherDestinations) {
-		int estimateP = 0;
+	private int getDistanceOfRoute(String start, String end, List<String> otherDestinations) {
 		int distanciaV = 0;
 		List<Flight> flights = getPlanDeVuelos2(start, end, otherDestinations);
 		if (!flights.isEmpty()) {
@@ -284,23 +297,12 @@ public class FlightRouteMasterService {
 			for (int i = 0; i < list.size() - 1; i++) {
 				List<Flight> vuelos = getPlanDeVuelos(list.get(i), list.get(i + 1), flights);
 				distanciaV += getDistanciaPromedio(vuelos);
-				estimateP += promedioDePersonas(vuelos);
-			}
-			estimateP += promedioDePersonas(getPlanDeVuelos(start, end, flights));
-			int size = otherDestinations.size();
-			if (size > 1) {
-				estimateP += promedioDePersonas(getPlanDeVuelos(otherDestinations.get(0), end, flights));
-				estimateP += promedioDePersonas(getPlanDeVuelos(start, otherDestinations.get(size - 1), flights));
 			}
 
 		} else {
 			distanciaV = getDistance(start, end, otherDestinations);
-			estimateP = promedioDePersonas * (otherDestinations.size() == 1 ? 3 : 6);
 		}
-		int[] ret = new int[2];
-		ret[0] = estimateP;
-		ret[1] = distanciaV;
-		return ret;
+		return distanciaV;
 
 	}
 
@@ -312,25 +314,27 @@ public class FlightRouteMasterService {
 		destinations.add(empty);
 		List<AirportTO> optimalRoute = new ArrayList<>();
 		Way optimalWay = new Way();
-		optimalWay.setWeight(getWeight(start.getIata(), end.getIata(), null));
-		optimalRoute.add(start);
-		optimalRoute.add(end);
 		if (stops == null || stops.isEmpty()) {
+			optimalWay.setWeight(getWeight(start.getIata(), end.getIata(), null));
+			optimalRoute.add(start);
+			optimalRoute.add(end);
 			for (AirportTO A : destinations) {
 				for (AirportTO B : destinations) {
 					if (!A.getIata().equals(B.getIata())) {
 						List<String> values = new ArrayList<>();
 						values.add(A.getIata());
-						values.add(B.getIata());
+						if (B.getIata().equals("") || A.getIata().equals("")
+								|| getDistance(A.getIata(), B.getIata()) > 300) {
+							values.add(B.getIata());
+						}
 						if (values.contains("")) {
 							values.remove("");
 						}
 						int weight = getWeight(start.getIata(), end.getIata(), values);
 						List<AirportTO> layovers = getLayovers(destinations, values);
 						if (weight < optimalWay.getWeight()
-								&& (capacity == -1 || getValues(start.getIata(), end.getIata(), values)[0] < capacity)
-								&& (distance == -1
-										|| getValues(start.getIata(), end.getIata(), values)[1] + 300 < distance)) {
+								&& (cantMaxPersonas(start.getIata(), end.getIata(), values) < capacity)
+								&& getDistanceOfRoute(start.getIata(), end.getIata(), values) + 300 < distance) {
 							optimalRoute.clear();
 							optimalWay.setWeight(weight);
 							optimalRoute.add(start);
@@ -342,6 +346,11 @@ public class FlightRouteMasterService {
 				}
 			}
 		} else if (stops.size() == 1) {
+			optimalWay.setWeight(getWeight(start.getIata(), end.getIata(),
+					stops.stream().map(AirportTO::getIata).collect(Collectors.toList())));
+			optimalRoute.add(start);
+			optimalRoute.addAll(stops);
+			optimalRoute.add(end);
 			AirportTO stop = stops.get(0);
 			for (AirportTO A : destinations) {
 				for (AirportTO B : destinations) {
@@ -350,10 +359,17 @@ public class FlightRouteMasterService {
 						List<String> values = new ArrayList<>();
 						if (A.getIata().equals(stop.getIata())) {
 							values.add(stop.getIata());
-							values.add(B.getIata());
+							if (stop.getIata().equals("") || B.getIata().equals("")
+									|| getDistance(stop.getIata(), B.getIata()) > 300) {
+								values.add(B.getIata());
+							}
+
 						}
 						if (B.getIata().equals(stop.getIata())) {
-							values.add(A.getIata());
+							if (stop.getIata().equals("") || A.getIata().equals("")
+									|| getDistance(A.getIata(), stop.getIata()) > 300) {
+								values.add(A.getIata());
+							}
 							values.add(stop.getIata());
 						}
 						if (values.contains("")) {
@@ -363,9 +379,8 @@ public class FlightRouteMasterService {
 						int weight = getWeight(start.getIata(), end.getIata(), values);
 						List<AirportTO> layovers = getLayovers(destinations, values);
 						if (weight < optimalWay.getWeight()
-								&& (capacity == -1 || getValues(start.getIata(), end.getIata(), values)[0] < capacity)
-								&& (distance == -1
-										|| getValues(start.getIata(), end.getIata(), values)[1] + 300 < distance)) {
+								&& cantMaxPersonas(start.getIata(), end.getIata(), values) < capacity
+								&& getDistanceOfRoute(start.getIata(), end.getIata(), values) + 300 < distance) {
 							optimalRoute.clear();
 							optimalWay.setWeight(weight);
 							optimalRoute.add(start);
@@ -410,18 +425,6 @@ public class FlightRouteMasterService {
 		return Util.getDistance(start, end);
 	}
 
-	private int getDistance(AirportTO start, AirportTO end, List<AirportTO> layovers) {
-		int ret = 0;
-		List<AirportTO> destinations = new ArrayList<>();
-		destinations.add(start);
-		destinations.addAll(layovers);
-		destinations.add(end);
-		for (int i = 0; i < destinations.size() - 1; i++) {
-			ret += Util.getDistance(destinations.get(i), destinations.get(i + 1));
-		}
-		return ret;
-	}
-
 	private int getDistance(List<AirportTO> destinations) {
 		int ret = 0;
 		for (int i = 0; i < destinations.size() - 1; i++) {
@@ -460,4 +463,55 @@ public class FlightRouteMasterService {
 		}
 		return ret;
 	}
+
+	private int cantPersonas(String start, String end) {
+		int cantPersonas = 0;
+		List<Flight> flights = getPlanDeVuelos(start, end, flightsGlobal);
+		int personasABordoProm = promedioDePersonas(flights);
+		if (flights.size() > 3 && personasABordoProm > 30) {
+			cantPersonas = personasABordoProm;
+		} else {
+			cantPersonas = promedioDePersonas;
+		}
+		return cantPersonas;
+	}
+
+	private int cantMaxPersonas(String start, String end, List<String> layovers) {
+		int cant = 0;
+		int cantMax = 0;
+		if (layovers.isEmpty()) {
+			return cantPersonas(start, end);
+		}
+		for (int i = 0; i < layovers.size() + 1; i++) {
+			if (i == 0) {
+				cant += cantPersonas(start, layovers.get(0)) + cantPersonas(start, end);
+				if (layovers.size() > 1) {
+					cant += cantPersonas(start, layovers.get(1));
+				}
+			}
+			if (i == 1) {
+				cant = cant - cantPersonas(start, layovers.get(0)) + cantPersonas(layovers.get(0), end);
+				if (layovers.size() > 1) {
+					cant += cantPersonas(layovers.get(1), layovers.get(1));
+				}
+			}
+			if (i == 2 && layovers.size() > 1) {
+				cant = cant - cantPersonas(layovers.get(0), layovers.get(1)) + cantPersonas(layovers.get(1), end);
+			}
+			if (cant > cantMax) {
+				cantMax = cant;
+			}
+		}
+		return cantMax;
+	}
+
+	private int cantMaxPersonas(FlightRouteResponseTO response) {
+		String start = response.getRoute().get(0).getIata();
+		String end = response.getRoute().get(response.getRoute().size() - 1).getIata();
+		List<String> layovers = response.getRoute().stream().map(AirportTO::getIata).collect(Collectors.toList());
+		layovers.remove(start);
+		layovers.remove(end);
+		return cantMaxPersonas(start, end, layovers);
+	}
+
 }
