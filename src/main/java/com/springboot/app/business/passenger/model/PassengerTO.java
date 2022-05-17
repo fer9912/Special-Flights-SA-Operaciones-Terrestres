@@ -17,6 +17,6 @@ public class PassengerTO {
 	private String menuType;
 	private String medicalCondition;
 	private String baggage;
-	private int idFlight;
+	private String idFlight;
 	private String status;
 }
