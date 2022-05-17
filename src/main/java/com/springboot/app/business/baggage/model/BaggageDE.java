@@ -48,4 +48,7 @@ public class BaggageDE implements Serializable {
 	@Column(name = "passenger_bool", nullable = true)
 	private char boolPassenger;
 
+	@Column(name = "estado", nullable = true)
+	private String estado;
+
 }

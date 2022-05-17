@@ -10,6 +10,7 @@ public class BaggageResponse {
 	private String idVuelo;
 	private String tipo;
 	private String peso;
+	private String estado;
 	private String cargaPasajero;
 	private String tipoDoc;
 	private String doc;

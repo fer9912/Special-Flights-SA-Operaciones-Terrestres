@@ -35,6 +35,7 @@ public class BaggageService {
 			resp.setIdVuelo(baggage.getIdVuelo());
 			resp.setTipo(baggage.getTipo());
 			resp.setPeso(String.valueOf(baggage.getWeight()));
+			resp.setEstado(baggage.getEstado());
 			resp.setCargaPasajero(String.valueOf(baggage.getBoolPassenger()));
 
 			if (baggage.getBoolPassenger() == 'Y') {
