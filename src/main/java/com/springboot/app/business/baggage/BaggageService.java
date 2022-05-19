@@ -31,22 +31,22 @@ public class BaggageService {
 		for (BaggageDE baggage : baggages) {
 			BaggageResponse resp = new BaggageResponse();
 
-			resp.setId(String.valueOf(baggage.getId()));
-			resp.setIdVuelo(baggage.getIdVuelo());
-			resp.setTipo(baggage.getTipo());
-			resp.setPeso(String.valueOf(baggage.getWeight()));
-			resp.setEstado(baggage.getEstado());
-			resp.setCargaPasajero(String.valueOf(baggage.getBoolPassenger()));
+			resp.setBaggageId(String.valueOf(baggage.getId()));
+			resp.setFlightId(baggage.getIdVuelo());
+			resp.setBaggageType(baggage.getTipo());
+			resp.setWeight(String.valueOf(baggage.getWeight()));
+			resp.setStatus(baggage.getEstado());
+			resp.setIsPassengerBaggage(String.valueOf(baggage.getBoolPassenger()));
 
 			if (baggage.getBoolPassenger() == 'Y') {
 
 				PassengerDE passenger = passengerRepository.findByIdPassenger(baggage.getIdPassenger());
 
-				resp.setTipoDoc(passenger.getDocType());
-				resp.setDoc(passenger.getDocNumber());
+				resp.setDocType(passenger.getDocType());
+				resp.setDocumentNumber(passenger.getDocNumber());
 			} else {
-				resp.setTipoDoc("-");
-				resp.setDoc("-");
+				resp.setDocType("-");
+				resp.setDocumentNumber("-");
 			}
 
 			response.add(resp);

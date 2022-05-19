@@ -6,12 +6,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BaggageResponse {
-	private String id;
-	private String idVuelo;
-	private String tipo;
-	private String peso;
-	private String estado;
-	private String cargaPasajero;
-	private String tipoDoc;
-	private String doc;
+	private String baggageId;
+	private String flightId;
+	private String baggageType;
+	private String weight;
+	private String status;
+	private String isPassengerBaggage;
+	private String docType;
+	private String documentNumber;
 }
