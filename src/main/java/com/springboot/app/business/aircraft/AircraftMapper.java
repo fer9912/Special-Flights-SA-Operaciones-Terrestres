@@ -21,6 +21,7 @@ public class AircraftMapper {
 		to.setWeightTolerance(de.getWeightTolerance());
 		to.setLubricantConsumption(de.getLubricantConsumption());
 		to.setMaxDistance(de.getMaxDistance());
+		to.setCrewMembers(de.getCrewMembers());
 		return to;
 
 	}
