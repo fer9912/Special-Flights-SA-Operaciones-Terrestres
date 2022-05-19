@@ -24,4 +24,10 @@ public class AircraftService {
 		return AircraftMapper.mapTO(de);
 	}
 
+	public AircraftTO getAircraftByModel(String model) {
+		AircraftDE de = this.aircraftRepository.findByModel(model);
+		return AircraftMapper.mapTO(de);
+
+	}
+
 }

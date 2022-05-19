@@ -14,7 +14,9 @@ import com.springboot.app.business.aircraft.model.AircraftTO;
 import com.springboot.app.business.airport.AirportService;
 import com.springboot.app.business.airport.model.AirportTO;
 import com.springboot.app.business.flightroutemaster.model.DayWeekDE;
+import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
+import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
 import com.springboot.app.business.flightroutemaster.model.Way;
 import com.springboot.app.repositories.DayWeekRepository;
@@ -582,6 +584,64 @@ public class FlightRouteMasterService {
 		layovers.remove(start);
 		layovers.remove(end);
 		return cantMaxPersonas(start, end, layovers);
+	}
+
+	public FlightRouteResponseApiTO generateFlightRouteApi(FlightRouteRequestApiTO request) throws Exception {
+		if (request.getIncludeDestinations() == null || request.getIncludeDestinations().size() < 2) {
+			throw new Exception("Se deben enviar almenos dos destinos a incluir");
+		}
+		FlightRouteRequestTO ret = new FlightRouteRequestTO();
+		List<AirportTO> airportsToInclude = new ArrayList<>();
+		List<AirportTO> airportsToExclude = new ArrayList<>();
+		AircraftTO aircraft = new AircraftTO();
+
+		if (request.getAircraft() != null && !request.getAircraft().isEmpty()) {
+			aircraft = this.aircraftService.getAircraftByModel(request.getAircraft().trim());
+			if (aircraft == null) {
+				throw new Exception("Modelo de aeronave no existe");
+			} else {
+				ret.setAircraft(aircraft);
+			}
+		}
+
+		for (String iata : request.getIncludeDestinations()) {
+			AirportTO airport = this.airportService.getByCode(iata.trim());
+			if (airport == null) {
+				throw new Exception("Codigo de aeropuerto " + airport + " no existe");
+			} else {
+				airportsToInclude.add(airport);
+			}
+		}
+
+		if (request.getExcludeDestinations() != null && !request.getExcludeDestinations().isEmpty()) {
+			for (String iata : request.getExcludeDestinations()) {
+				AirportTO airport = this.airportService.getByCode(iata.trim());
+				if (airport == null) {
+					throw new Exception("Codigo de aeropuerto " + airport + " no existe");
+				} else {
+					airportsToExclude.add(airport);
+				}
+			}
+		}
+
+		ret.setAircraft(aircraft);
+		ret.setIncludeDestinations(airportsToInclude);
+		ret.setExcludeDestinations(airportsToExclude);
+		FlightRouteResponseTO response = this.generateFlightRoute(ret);
+		FlightRouteResponseApiTO res = new FlightRouteResponseApiTO();
+		if (response == null) {
+			throw new Exception("No se pudo calcular la ruta optima");
+		} else {
+			res.setAircraft(response.getAircraft().getModel());
+			res.setRoute(response.getRoute().stream().map(AirportTO::getIata).collect(Collectors.toList()));
+			res.setOptimalAircrafts(
+					response.getOptimalAircrafts().stream().map(AircraftTO::getModel).collect(Collectors.toList()));
+
+			res.setDistance(response.getDistance());
+			res.setDay(response.getDay());
+			res.setPeopleEstimate(response.getPeopleEstimate());
+		}
+		return res;
 	}
 
 }
