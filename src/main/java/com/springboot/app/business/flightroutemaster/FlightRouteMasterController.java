@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
+import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
 import com.springboot.app.services.ApisRequests;
 
@@ -27,6 +29,17 @@ public class FlightRouteMasterController {
 	public ResponseEntity<?> generateFlightRoute(@RequestBody FlightRouteRequestTO request) {
 		try {
 			FlightRouteResponseTO response = this.service.generateFlightRoute(request);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			System.out.println(e);
+			return ResponseEntity.internalServerError().body("Error to generate flight route: \n" + e.getMessage());
+		}
+	}
+
+	@PostMapping("/api/generateFlightRoute")
+	public ResponseEntity<?> generateFlightRoute(@RequestBody FlightRouteRequestApiTO request) {
+		try {
+			FlightRouteResponseApiTO response = this.service.generateFlightRouteApi(request);
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			System.out.println(e);

@@ -13,4 +13,5 @@ public class AircraftTO {
 	private int passengerCapacity;
 	private int weightTolerance;
 	private int maxDistance;
+	private int crewMembers;
 }
