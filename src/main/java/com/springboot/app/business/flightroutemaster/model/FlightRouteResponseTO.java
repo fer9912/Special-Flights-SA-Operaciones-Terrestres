@@ -17,4 +17,5 @@ public class FlightRouteResponseTO {
 	private int distance;
 	private List<AirportTO> route;
 	private String day;
+	private int peopleEstimate;
 }

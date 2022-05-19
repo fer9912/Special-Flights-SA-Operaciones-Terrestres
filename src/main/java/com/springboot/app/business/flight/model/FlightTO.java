@@ -1,6 +1,7 @@
 package com.springboot.app.business.flight.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,7 @@ public class FlightTO {
 	private String day;
 	private String hour;
 	private String aircraft;
+	private int peopleEstimate;
+	private List<String> aircrafts;
 
 }

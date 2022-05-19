@@ -59,4 +59,9 @@ public class FlightDE implements Serializable {
 	@Column(name = "aircraft", nullable = true)
 	private int aircraft;
 
+	@Column(name = "aircrafts", nullable = true)
+	private String aircrafts;
+
+	@Column(name = "people_estimate", nullable = true)
+	private int peopleEstimate;
 }

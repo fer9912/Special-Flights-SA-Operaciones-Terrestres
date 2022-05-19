@@ -1,5 +1,6 @@
 package com.springboot.app.business.flight;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,18 @@ public class FlightMapper {
 		to.setRoute(de.getRoute());
 		to.setStatus(de.getStatus());
 		to.setAircraft(aircraftService.getAircraft(de.getAircraft()).getModel());
+		to.setAircrafts(getAircraft(de.getAircrafts()));
+		to.setPeopleEstimate(de.getPeopleEstimate());
 		return to;
+	}
+
+	private List<String> getAircraft(String aircrafts) {
+		String[] values = aircrafts.split(",");
+		List<String> ret = new ArrayList();
+		for (String i : values) {
+			ret.add(aircraftService.getAircraft(Integer.valueOf(i)).getModel());
+		}
+		return ret;
 	}
 
 	public List<FlightTO> mapTOList(List<FlightDE> des) {
