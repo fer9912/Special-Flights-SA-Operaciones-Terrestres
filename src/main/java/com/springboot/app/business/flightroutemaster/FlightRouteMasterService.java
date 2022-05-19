@@ -280,12 +280,20 @@ public class FlightRouteMasterService {
 		return oilCProm / flights2.size();
 	}
 
+	public int getOilCPromTesteable(List<Flight> flights2) {
+		return getOilCProm(flights2);
+	}
+
 	private int getFuelCProm(List<Flight> flights2) {
 		int fuelCProm = 0;
 		for (Flight flight : flights2) {
 			fuelCProm += flight.getLtscombustiblereal() / flight.getKilometrajereal();
 		}
 		return fuelCProm / flights2.size();
+	}
+
+	public int getFuelCPromTesteable(List<Flight> flights2) {
+		return getFuelCProm(flights2);
 	}
 
 	private int getDistanciaPromedio(List<Flight> flights2) {
@@ -296,12 +304,20 @@ public class FlightRouteMasterService {
 		return distancia / flights2.size();
 	}
 
+	public int getDistanciaPromedioTesteable(List<Flight> flights2) {
+		return getDistanciaPromedio(flights2);
+	}
+
 	private int promedioDePersonas(List<Flight> flights2) {
 		int pasajerosQueHicieronEseViaje = 0;
 		for (Flight flight : flights2) {
 			pasajerosQueHicieronEseViaje += flight.getTotalpersonasabordo();
 		}
 		return flights2.isEmpty() ? 0 : pasajerosQueHicieronEseViaje / flights2.size();
+	}
+
+	public int promedioDePersonasTesteable(List<Flight> flights2) {
+		return promedioDePersonas(flights2);
 	}
 
 	private List<Flight> getPlanDeVuelos(String a, String b, List<Flight> flights) {
@@ -322,12 +338,20 @@ public class FlightRouteMasterService {
 		return ret / aeronaves.size();
 	}
 
+	public int getLubricantCAverageByAircraftsTesteable(List<AircraftTO> aeronaves) {
+		return getLubricantCAverageByAircrafts(aeronaves);
+	}
+
 	private int getFuelCAverageByAircrafts(List<AircraftTO> aeronaves) {
 		int ret = 0;
 		for (AircraftTO aeronave : aeronaves) {
 			ret += aeronave.getFuelConsumption();
 		}
 		return ret / aeronaves.size();
+	}
+
+	public int getFuelCAverageByAircraftsTesteable(List<AircraftTO> aeronaves) {
+		return getFuelCAverageByAircrafts(aeronaves);
 	}
 
 	private int getDistanceOfRoute(String start, String end, List<String> otherDestinations) {

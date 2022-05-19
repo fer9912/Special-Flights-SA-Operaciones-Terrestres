@@ -49,4 +49,7 @@ public class AircraftDE implements Serializable {
 	@Column(name = "weight_tolerance", nullable = false)
 	private int weightTolerance;
 
+	@Column(name = "crew_members", nullable = false)
+	private int crewMembers;
+
 }
