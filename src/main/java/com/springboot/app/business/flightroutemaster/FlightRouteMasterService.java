@@ -19,6 +19,8 @@ import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
 import com.springboot.app.business.flightroutemaster.model.Way;
+import com.springboot.app.business.parameters.ParametersService;
+import com.springboot.app.business.parameters.model.ParametersTO;
 import com.springboot.app.repositories.DayWeekRepository;
 import com.springboot.app.services.ApisRequests;
 import com.springboot.app.services.model.Flight;
@@ -30,7 +32,7 @@ public class FlightRouteMasterService {
 	int costoCombustiblePorLitro = 150;
 	int costoLubricantePorLitro = 10;
 	int costoDeInsumosPorPersona = 28;
-	int promedioDePersonas = 0;
+	int promedioDePersonas = 60;
 	int listrosDeCombustibleXKilometro = 0;
 	int listrosDeLubricanteXMilKilometros = 0;
 	int estimadoDePersonas = 0;
@@ -48,8 +50,11 @@ public class FlightRouteMasterService {
 	private AircraftService aircraftService;
 	@Autowired
 	private ApisRequests apisRequests;
+	@Autowired
+	private ParametersService parametersService;
 
 	public FlightRouteResponseTO generateFlightRoute(FlightRouteRequestTO request) {
+		setParameters();
 		airportsGlobal = this.airportService.getAirports();
 		FlightRouteResponseTO response = new FlightRouteResponseTO();
 		setParametersToWeight(request);
@@ -63,9 +68,18 @@ public class FlightRouteMasterService {
 		return response;
 	}
 
+	private void setParameters() {
+		ParametersTO parameters = this.parametersService.getParameters();
+		promedioDePersonas = parameters.getPromedioDePersonas();
+		gananciaPorPersona = parameters.getGananciaPorPersona();
+		costoCombustiblePorLitro = parameters.getCostoLitroCombustible();
+		costoLubricantePorLitro = parameters.getCostoLitroLubricante();
+		costoDeInsumosPorPersona = parameters.getCostoInsumosPorPersona();
+
+	}
+
 	private void setParametersToWeight(FlightRouteRequestTO request) {
 		flightsGlobal = this.apisRequests.getFlights();
-		promedioDePersonas = 60;
 		if (request.getAircraft() != null) {
 			AircraftTO aeronave = this.aircraftService.getAircraft(request.getAircraft().getId());
 			if ((aeronave.getPassengerCapacity() * 60 / 100) < promedioDePersonas) {
