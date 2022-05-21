@@ -10,4 +10,6 @@ import com.springboot.app.business.user.model.UserDE;
 public interface UserRepository extends JpaRepository<UserDE, Long>, JpaSpecificationExecutor<UserDE> {
 
 	UserDE findByUserAndPassword(String user, String password);
+
+	UserDE findByUser(String user);
 }

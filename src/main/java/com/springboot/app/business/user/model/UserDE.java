@@ -34,7 +34,7 @@ public class UserDE implements Serializable {
 	@Column(name = "user", length = 45, nullable = false)
 	private String user;
 
-	@Column(name = "password", length = 45, nullable = false)
+	@Column(name = "password", length = 255, nullable = false)
 	private String password;
 
 	@Column(name = "profile", length = 100, nullable = true)
