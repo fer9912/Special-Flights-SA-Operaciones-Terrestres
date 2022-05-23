@@ -365,7 +365,7 @@ public class FlightRouteMasterService {
 	private List<Flight> getPlanDeVuelos(String a, String b, List<Flight> flights) {
 		List<Flight> ret = new ArrayList<>();
 		for (Flight flight : flights) {
-			if (a.equals(flight.getOrigen()) && b.equals(flight.getDestino())) {
+			if (a.equals(flight.getCodiata_origen_fk()) && b.equals(flight.getCodiata_destino_fk())) {
 				ret.add(flight);
 			}
 		}

@@ -8,8 +8,8 @@ import lombok.Setter;
 public class Flight {
 	private int idvuelo;
 	private int idaeronave_fk;
-	private String origen;
-	private String destino;
+	private String codiata_origen_fk;
+	private String codiata_destino_fk;
 	private int idaeropuerto_origen_fk;
 	private int idaeropuerto_destino_fk;
 	private int idclima;
