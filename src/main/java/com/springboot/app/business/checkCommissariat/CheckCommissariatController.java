@@ -22,8 +22,8 @@ public class CheckCommissariatController {
 	@GetMapping("/get")
 	public ResponseEntity<?> getCheckCommissariat(@RequestParam(value = "code") String code) {
 		try {
-			CheckCommissariatTO checkFlight = this.service.getCheckCommissariatByCode(code);
-			return ResponseEntity.ok(checkFlight);
+			CheckCommissariatTO checkCommissariat = this.service.getCheckCommissariat(code);
+			return ResponseEntity.ok(checkCommissariat);
 		} catch (Exception e) {
 			System.out.println(e);
 			return ResponseEntity.badRequest().body("Invalid or empty flight code");

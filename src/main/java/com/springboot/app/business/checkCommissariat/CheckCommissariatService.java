@@ -12,12 +12,7 @@ public class CheckCommissariatService {
 	@Autowired
 	private CheckCommissariatRepository checkCommissariatRepository;
 
-	public CheckCommissariatTO getCheckCommissariat(int idCheckCommissariat) {
-		CheckCommissariatDE de = checkCommissariatRepository.findByIdCheckCommissariat(idCheckCommissariat);
-		return CheckCommissariatMapper.mapTo(de);
-	}
-
-	public CheckCommissariatTO getCheckCommissariatByCode(String code) {
+	public CheckCommissariatTO getCheckCommissariat(String code) {
 		CheckCommissariatDE de = checkCommissariatRepository.findByCode(code);
 		return CheckCommissariatMapper.mapTo(de);
 	}
