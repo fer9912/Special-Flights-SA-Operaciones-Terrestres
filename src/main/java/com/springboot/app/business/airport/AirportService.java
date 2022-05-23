@@ -1,5 +1,6 @@
 package com.springboot.app.business.airport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.springboot.app.business.airport.model.AirportDE;
 import com.springboot.app.business.airport.model.AirportTO;
 import com.springboot.app.repositories.AirportRepository;
+import com.springboot.app.utils.Util;
 
 @Service
 public class AirportService {
@@ -24,4 +26,20 @@ public class AirportService {
 		return AirportMapper.mapTO(de);
 	}
 
+	public List<AirportTO> getAirportsNear(String o) {
+		AirportTO origin = this.getByCode(o);
+		List<AirportDE> des = airportRepository.findAll();
+		List<AirportTO> airports = AirportMapper.mapTOList(des);
+		List<AirportTO> ret = new ArrayList<>();
+		for (AirportTO destination : airports) {
+			if (this.getDistance(origin, destination) < 31 && !destination.getIata().equals(o)) {
+				ret.add(destination);
+			}
+		}
+		return ret;
+	}
+
+	private int getDistance(AirportTO start, AirportTO end) {
+		return Util.getDistance(start, end);
+	}
 }

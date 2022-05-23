@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
+import com.springboot.app.business.flightroutemaster.model.UnmannedAircraftResponse;
 import com.springboot.app.services.ApisRequests;
 
 @CrossOrigin("*")
@@ -47,12 +49,14 @@ public class FlightRouteMasterController {
 		}
 	}
 
-	@GetMapping("")
-	public ResponseEntity<?> get() {
+	@GetMapping("/getUnmannedAircraft")
+	public ResponseEntity<?> getOptimalUnmannedAircraft(@RequestParam(value = "origin") String origin,
+			@RequestParam(value = "destination") String destination) {
 		try {
-			return ResponseEntity.ok(this.apisRequests.getFlights());
+			UnmannedAircraftResponse response = this.service.calculateOptimalAircraft(origin, destination);
+			return ResponseEntity.ok(response);
 		} catch (Exception e) {
-			return ResponseEntity.internalServerError().body("Error to generate flight route");
+			return ResponseEntity.internalServerError().body("Error to get optimal unmanned aircraft");
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.airport.model.AirportTO;
@@ -25,6 +26,16 @@ public class AirportController {
 			return ResponseEntity.ok(airports);
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error to get all airports");
+		}
+	}
+
+	@GetMapping("/getNear")
+	public ResponseEntity<?> getAirportsNear(@RequestParam(value = "origin") String origin) {
+		try {
+			List<AirportTO> airports = this.service.getAirportsNear(origin);
+			return ResponseEntity.ok(airports);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("Error to get near airports");
 		}
 	}
 }

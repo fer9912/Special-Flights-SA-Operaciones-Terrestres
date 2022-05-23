@@ -18,6 +18,7 @@ import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApi
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
+import com.springboot.app.business.flightroutemaster.model.UnmannedAircraftResponse;
 import com.springboot.app.business.flightroutemaster.model.Way;
 import com.springboot.app.business.parameters.ParametersService;
 import com.springboot.app.business.parameters.model.ParametersTO;
@@ -66,6 +67,31 @@ public class FlightRouteMasterService {
 		response.setDistance(getDistance(response.getRoute()));
 		response.setPeopleEstimate(getPeopleEstimate(response.getRoute()));
 		return response;
+	}
+
+	public UnmannedAircraftResponse calculateOptimalAircraft(String origin, String destination) {
+		airportsGlobal = this.airportService.getAirports();
+		List<AircraftTO> aeronaves = this.aircraftService.getAircrafts();
+		aeronaves = aeronaves.stream().filter(a -> a.getPassengerCapacity() == 0).collect(Collectors.toList());
+		UnmannedAircraftResponse response = new UnmannedAircraftResponse();
+		int distancia = this.getDistance(origin, destination);
+		int maxDistance = Integer.MAX_VALUE;
+		AircraftTO aircraft = new AircraftTO();
+		List<String> optimals = new ArrayList<>();
+		for (AircraftTO aeronave : aeronaves) {
+			if (aeronave.getMaxDistance() > distancia && aeronave.getMaxDistance() < maxDistance) {
+				maxDistance = aeronave.getMaxDistance();
+				aircraft = aeronave;
+			}
+			if (aeronave.getMaxDistance() > distancia) {
+				optimals.add(aeronave.getModel());
+			}
+		}
+		response.setAircraftModel(aircraft.getModel());
+		response.setOptimalAircrafts(optimals);
+		response.setDistance(distancia);
+		return response;
+
 	}
 
 	private void setParameters() {
