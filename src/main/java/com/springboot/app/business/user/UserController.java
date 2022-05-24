@@ -3,9 +3,9 @@ package com.springboot.app.business.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.user.model.UserTO;
@@ -17,11 +17,10 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-	@GetMapping("/validate")
-	public ResponseEntity<?> getUser(@RequestParam(value = "user") String user,
-			@RequestParam(value = "password") String password) {
+	@PostMapping("/validate")
+	public ResponseEntity<?> getUser(@RequestBody UserRequest request) {
 		try {
-			UserTO ret = this.service.searchUser(user, password);
+			UserTO ret = this.service.searchUser(request);
 			return ResponseEntity.ok(ret);
 		} catch (Exception e) {
 			return ResponseEntity.ok(null);

@@ -14,10 +14,10 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public UserTO searchUser(String user, String password) {
-		String cryptoPass = AES.decryptText(password, "grops2022");
+	public UserTO searchUser(UserRequest request) {
+		String cryptoPass = AES.decryptText(request.getPassword(), "grops2022");
 		String pass = AES.encrypt(cryptoPass, "grops2022");
-		UserDE de = userRepository.findByUserAndPassword(user, pass);
+		UserDE de = userRepository.findByUserAndPassword(request.getUser(), pass);
 		return UserMapper.mapTo(de);
 	}
 
