@@ -29,6 +29,16 @@ public class AirportController {
 		}
 	}
 
+	@GetMapping("/getToUnmannedFlight")
+	public ResponseEntity<?> getToUnmannedFlight() {
+		try {
+			List<AirportTO> airports = this.service.getAirportsToUnmmaned();
+			return ResponseEntity.ok(airports);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("Error to get airports to unmanned flights");
+		}
+	}
+
 	@GetMapping("/getNear")
 	public ResponseEntity<?> getAirportsNear(@RequestParam(value = "origin") String origin) {
 		try {

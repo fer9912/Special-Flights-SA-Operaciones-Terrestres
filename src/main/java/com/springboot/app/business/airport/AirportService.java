@@ -42,4 +42,17 @@ public class AirportService {
 	private int getDistance(AirportTO start, AirportTO end) {
 		return Util.getDistance(start, end);
 	}
+
+	public List<AirportTO> getAirportsToUnmmaned() {
+		List<AirportDE> des = airportRepository.findAll();
+		List<AirportTO> airports = AirportMapper.mapTOList(des);
+		List<AirportTO> ret = new ArrayList<>();
+		for (AirportTO destination : airports) {
+			List<AirportTO> aeropuertos = this.getAirportsNear(destination.getIata());
+			if (aeropuertos != null && !aeropuertos.isEmpty()) {
+				ret.add(destination);
+			}
+		}
+		return ret;
+	}
 }
