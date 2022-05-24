@@ -15,7 +15,8 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public UserTO searchUser(String user, String password) {
-		String pass = AES.encrypt(password, "grops2022");
+		String cryptoPass = AES.decryptText(password, "grops2022");
+		String pass = AES.encrypt(cryptoPass, "grops2022");
 		UserDE de = userRepository.findByUserAndPassword(user, pass);
 		return UserMapper.mapTo(de);
 	}
