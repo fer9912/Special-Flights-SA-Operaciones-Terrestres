@@ -50,7 +50,7 @@ public class ReportController {
 			createPdfReport(service.getAll());
 			log.info("File successfully saved at the given path.");
 		} catch (final Exception e) {
-			log.error("Some error has occurred while preparing the employee pdf report.");
+			log.error("service.getAll()");
 			e.printStackTrace();
 		}
 		// Returning the view name as the index page for ease.
@@ -62,7 +62,7 @@ public class ReportController {
 	private void createPdfReport(final List<PassengerTO> passengers) throws JRException {
 		// Fetching the .jrxml file from the resources folder.
 		final InputStream stream = this.getClass().getResourceAsStream("/passenger.jrxml");
-
+		System.out.println(passengers);
 		// Compile the Jasper report from .jrxml to .japser
 		final JasperReport report = JasperCompileManager.compileReport(stream);
 

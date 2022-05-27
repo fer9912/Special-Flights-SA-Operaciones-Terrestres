@@ -112,24 +112,6 @@
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="275" splitType="Stretch">
-			<pieChart>
-				<chart evaluationTime="Report">
-					<reportElement x="70" y="-10" width="370" height="260" uuid="f4b9dc5b-8c9b-482a-a7ab-5ee1b984f14b"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<pieDataset>
-					<dataset resetType="Report" incrementType="Group" incrementGroup="Group1"/>
-					<keyExpression><![CDATA[$F{medicalCondition}]]></keyExpression>
-					<valueExpression><![CDATA[$V{Group1_COUNT}]]></valueExpression>
-				</pieDataset>
-				<piePlot>
-					<plot/>
-					<itemLabel/>
-				</piePlot>
-			</pieChart>
-		</band>
+		<band height="275" splitType="Stretch"/>
 	</summary>
 </jasperReport>
