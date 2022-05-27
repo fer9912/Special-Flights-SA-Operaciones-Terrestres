@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="43ef9d2f-518c-43a8-b68a-1af5b8ffc2e6">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="idPassenger" class="java.lang.Integer">
+		<fieldDescription><![CDATA[idPassenger]]></fieldDescription>
+	</field>
+	<field name="baggage" class="java.lang.String">
+		<fieldDescription><![CDATA[baggage]]></fieldDescription>
+	</field>
+	<field name="docNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[docNumber]]></fieldDescription>
+	</field>
+	<field name="docType" class="java.lang.String">
+		<fieldDescription><![CDATA[docType]]></fieldDescription>
+	</field>
+	<field name="sex" class="java.lang.String">
+		<fieldDescription><![CDATA[sex]]></fieldDescription>
+	</field>
+	<field name="idFlight" class="java.lang.String">
+		<fieldDescription><![CDATA[idFlight]]></fieldDescription>
+	</field>
+	<field name="classFlight" class="java.lang.String">
+		<fieldDescription><![CDATA[classFlight]]></fieldDescription>
+	</field>
+	<field name="medicalCondition" class="java.lang.String">
+		<fieldDescription><![CDATA[medicalCondition]]></fieldDescription>
+	</field>
+	<field name="nationality" class="java.lang.String">
+		<fieldDescription><![CDATA[nationality]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String">
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="menuType" class="java.lang.String">
+		<fieldDescription><![CDATA[menuType]]></fieldDescription>
+	</field>
+	<field name="age" class="java.lang.String">
+		<fieldDescription><![CDATA[age]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[status]]></fieldDescription>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{medicalCondition}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="30" y="0" width="190" height="30" uuid="0dc03fb9-e711-48cb-a4ac-854dbfdd04bb"/>
+					<textElement>
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{medicalCondition}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="1" width="160" height="30" uuid="04f76024-2eb8-4047-aa97-b39e0535146c"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Group1_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="30" y="0" width="480" height="40" uuid="4931948d-f26a-41cd-a163-3145e46b8a95"/>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<text><![CDATA[Reporte de condiciones medicas por pasajeros]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="30" y="0" width="170" height="30" uuid="14c98b53-e620-4fc4-973e-d3041b29e023"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Condición Médica"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="b58945a6-5f6b-4021-ac86-76153731bcad"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Cantidad"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="275" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="70" y="-10" width="370" height="260" uuid="f4b9dc5b-8c9b-482a-a7ab-5ee1b984f14b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Report" incrementType="Group" incrementGroup="Group1"/>
+					<keyExpression><![CDATA[$F{medicalCondition}]]></keyExpression>
+					<valueExpression><![CDATA[$V{Group1_COUNT}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>
