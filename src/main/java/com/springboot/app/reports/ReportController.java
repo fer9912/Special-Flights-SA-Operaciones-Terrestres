@@ -25,7 +25,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
-@RequestMapping(value = "/report")
+@RequestMapping("report")
 public class ReportController {
 
 	final Logger log = LoggerFactory.getLogger(this.getClass());
