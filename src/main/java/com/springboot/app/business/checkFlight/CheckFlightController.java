@@ -1,5 +1,8 @@
 package com.springboot.app.business.checkFlight;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.checkFlight.model.CheckFlightTO;
+import com.springboot.app.services.ApisRequests;
+import com.springboot.app.services.model.Flight;
 
 @CrossOrigin("*")
 @RestController
@@ -18,6 +23,8 @@ import com.springboot.app.business.checkFlight.model.CheckFlightTO;
 public class CheckFlightController {
 	@Autowired
 	private CheckFlightService service;
+	private ApisRequests apisRequests;
+	List<Flight> flightsGlobal = new ArrayList<>();
 
 	@GetMapping("/get")
 	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "code") String code) {
@@ -39,4 +46,5 @@ public class CheckFlightController {
 			return ResponseEntity.badRequest().body("Error to save checkFlight");
 		}
 	}
+
 }

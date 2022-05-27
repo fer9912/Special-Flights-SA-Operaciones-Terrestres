@@ -1,5 +1,8 @@
 package com.springboot.app.business.passenger;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.springboot.app.business.passenger.model.PassengerDE;
 import com.springboot.app.business.passenger.model.PassengerTO;
 
@@ -39,6 +42,10 @@ public class PassengerMapper {
 		de.setIdFlight(to.getIdFlight());
 		de.setStatus(to.getStatus());
 		return de;
+	}
+
+	public static List<PassengerTO> mapTOList(List<PassengerDE> des) {
+		return des.stream().map(d -> mapTo(d)).collect(Collectors.toList());
 	}
 
 }
