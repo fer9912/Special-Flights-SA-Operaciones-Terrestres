@@ -365,7 +365,8 @@ public class FlightRouteMasterService {
 	private List<Flight> getPlanDeVuelos(String a, String b, List<Flight> flights) {
 		List<Flight> ret = new ArrayList<>();
 		for (Flight flight : flights) {
-			if (a.equals(flight.getCodiata_origen_fk()) && b.equals(flight.getCodiata_destino_fk())) {
+			if (a.equals(flight.getOrigenreal_codiata_fk()) && b.equals(flight.getDestinoreal_codiata_fk())
+					&& "Aterrizado".equals(flight.getEstado().trim())) {
 				ret.add(flight);
 			}
 		}
@@ -642,6 +643,8 @@ public class FlightRouteMasterService {
 			} else {
 				ret.setAircraft(aircraft);
 			}
+		} else {
+			ret.setAircraft(null);
 		}
 
 		for (String iata : request.getIncludeDestinations()) {
@@ -664,7 +667,6 @@ public class FlightRouteMasterService {
 			}
 		}
 
-		ret.setAircraft(aircraft);
 		ret.setIncludeDestinations(airportsToInclude);
 		ret.setExcludeDestinations(airportsToExclude);
 		FlightRouteResponseTO response = this.generateFlightRoute(ret);
