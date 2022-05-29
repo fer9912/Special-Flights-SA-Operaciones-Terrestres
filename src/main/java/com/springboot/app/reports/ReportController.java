@@ -34,15 +34,6 @@ public class ReportController {
 	@Autowired
 	PassengerService service;
 
-	// Method to display the index page of the application.
-	@GetMapping(value = "/get")
-	public ModelAndView index() {
-		log.info("Showing the welcome page.");
-		model.setViewName("welcome");
-		return model;
-	}
-
-	// Method to create the pdf report via jasper framework.
 	@GetMapping(value = "/view")
 	public ModelAndView viewReport() {
 		log.info("Preparing the pdf report via jasper.");
@@ -53,38 +44,27 @@ public class ReportController {
 			log.error("service.getAll()");
 			e.printStackTrace();
 		}
-		// Returning the view name as the index page for ease.
+
 		model.setViewName("welcome");
 		return model;
 	}
 
-	// Method to create the pdf file using the employee list datasource.
 	private void createPdfReport(final List<PassengerTO> passengers) throws JRException {
-		// Fetching the .jrxml file from the resources folder.
-		final InputStream stream = this.getClass().getResourceAsStream("/passenger.jrxml");
+
+		InputStream stream = this.getClass().getResourceAsStream("/passenger.jrxml");
 		System.out.println(passengers);
-		// Compile the Jasper report from .jrxml to .japser
-		final JasperReport report = JasperCompileManager.compileReport(stream);
 
-		// Fetching the employees from the data source.
-		final JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(passengers);
+		JasperReport report = JasperCompileManager.compileReport(stream);
 
-		// Adding the additional parameters to the pdf.
-		final Map<String, Object> parameters = new HashMap<>();
+		JRBeanCollectionDataSource source = new JRBeanCollectionDataSource(passengers);
+
+		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("createdBy", "GROPS");
 
-		// Filling the report with the employee data and additional parameters
-		// information.
-		final JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
+		JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
 
-		// Users can change as per their project requrirements or can take it as request
-		// input requirement.
-		// For simplicity, this tutorial will automatically place the file under the
-		// "c:" drive.
-		// If users want to download the pdf file on the browser, then they need to use
-		// the "Content-Disposition" technique.
-		final String filePath = "\\";
-		// Export the report to a PDF file.
+		String filePath = "\\";
+
 		JasperExportManager.exportReportToPdfFile(print, filePath + "passengers_report.pdf");
 	}
 }

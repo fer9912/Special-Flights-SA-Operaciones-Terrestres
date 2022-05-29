@@ -1,6 +1,7 @@
 package com.springboot.app.business.checkFlight;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.checkFlight.model.CheckFlightTO;
-import com.springboot.app.services.ApisRequests;
 import com.springboot.app.services.model.Flight;
 
 @CrossOrigin("*")
@@ -23,8 +23,6 @@ import com.springboot.app.services.model.Flight;
 public class CheckFlightController {
 	@Autowired
 	private CheckFlightService service;
-	private ApisRequests apisRequests;
-	List<Flight> flightsGlobal = new ArrayList<>();
 
 	@GetMapping("/get")
 	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "code") String code) {
@@ -44,6 +42,20 @@ public class CheckFlightController {
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Error to save checkFlight");
+		}
+	}
+
+	@GetMapping("/getFlightByDate")
+	public ResponseEntity<?> getFlightByDate(@RequestParam(value = "date") String fecha) {
+		try {
+			SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = formato.parse(fecha);
+			List<Flight> flights = this.service.getFlight(date);
+
+			return ResponseEntity.ok(flights);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body("Invalid date - " + e.getMessage());
 		}
 	}
 

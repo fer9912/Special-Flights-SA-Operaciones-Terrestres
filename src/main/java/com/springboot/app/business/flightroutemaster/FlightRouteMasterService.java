@@ -365,7 +365,7 @@ public class FlightRouteMasterService {
 	private List<Flight> getPlanDeVuelos(String a, String b, List<Flight> flights) {
 		List<Flight> ret = new ArrayList<>();
 		for (Flight flight : flights) {
-			if (a.equals(flight.getOrigenreal_codiata_fk()) && b.equals(flight.getDestinoreal_codiata_fk())
+			if (a.equals(flight.getOrigenreal_codiata()) && b.equals(flight.getDestinoreal_codiata())
 					&& "Aterrizado".equals(flight.getEstado().trim())) {
 				ret.add(flight);
 			}
