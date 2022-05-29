@@ -1,5 +1,7 @@
 package com.springboot.app.business.flight;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,19 @@ public class FlightController {
 			return ResponseEntity.ok(flight);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Invalid or empty flight code");
+		}
+	}
+
+	@GetMapping("/getByDate")
+	public ResponseEntity<?> getFlightByDate(@RequestParam(value = "date") String fecha) {
+		try {
+			SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = formato.parse(fecha);
+			List<FlightTO> flights = this.service.getFlightByDate(date);
+			return ResponseEntity.ok(flights);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body("Invalid date - " + e.getMessage());
 		}
 	}
 

@@ -1,6 +1,8 @@
 package com.springboot.app.business.flight;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,13 @@ public class FlightService {
 	public List<FlightTO> getFlights() {
 		List<FlightDE> des = flightRepository.findAll();
 		return flightMapper.mapTOList(des);
+	}
+
+	public List<FlightTO> getFlightByDate(Date date) {
+		List<FlightTO> vuelos = this.getFlights();
+		String a = date.getDate() + "-" + date.getMonth();
+		return vuelos.stream().filter(v -> a.equals(v.getDate().getDate() + "-" + v.getDate().getMonth()))
+				.collect(Collectors.toList());
 	}
 
 }

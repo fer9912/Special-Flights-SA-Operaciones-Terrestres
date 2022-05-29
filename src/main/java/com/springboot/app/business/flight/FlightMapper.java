@@ -34,10 +34,12 @@ public class FlightMapper {
 	}
 
 	private List<String> getAircraft(String aircrafts) {
+		aircrafts = aircrafts.replace("[", "");
+		aircrafts = aircrafts.replace("]", "");
 		String[] values = aircrafts.split(",");
 		List<String> ret = new ArrayList();
 		for (String i : values) {
-			ret.add(aircraftService.getAircraft(Integer.valueOf(i)).getModel());
+			ret.add(i.trim());
 		}
 		return ret;
 	}
