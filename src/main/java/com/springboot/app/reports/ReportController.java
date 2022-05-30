@@ -63,8 +63,8 @@ public class ReportController {
 
 		JasperPrint print = JasperFillManager.fillReport(report, parameters, source);
 
-		String filePath = "\\";
+		String filePath = "C:\\reporte.html\\";
 
-		JasperExportManager.exportReportToPdfFile(print, filePath + "passengers_report.pdf");
+		JasperExportManager.exportReportToHtmlFile(print, filePath);
 	}
 }
