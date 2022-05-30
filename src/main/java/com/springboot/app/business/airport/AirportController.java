@@ -48,4 +48,17 @@ public class AirportController {
 			return ResponseEntity.internalServerError().body("Error to get near airports");
 		}
 	}
+
+	@GetMapping("/getByIata")
+	public ResponseEntity<?> getAirportByIata(@RequestParam(value = "iata") String iata) {
+		try {
+
+			AirportTO airport = this.service.getByCode(iata);
+			return ResponseEntity.ok(airport);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body("Invalid iata - " + e.getMessage());
+		}
+	}
+
 }
