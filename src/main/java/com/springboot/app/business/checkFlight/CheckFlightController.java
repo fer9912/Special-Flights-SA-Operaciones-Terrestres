@@ -59,13 +59,14 @@ public class CheckFlightController {
 		}
 	}
 
-	@GetMapping("/getFlightById")
+	@GetMapping("/getCheckFlightById")
 	public ResponseEntity<?> getFlightByCode(@RequestParam("code") String code,
 			@RequestParam(value = "fechadespegueestimado") String fechadespegueestimado,
 			@RequestParam(value = "horadespegueestimado") String horadespegueestimado) {
 		try {
-
-			Flight flight = this.service.getFlightById(code, fechadespegueestimado, horadespegueestimado);
+			SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = formato.parse(fechadespegueestimado);
+			CheckFlightTO flight = this.service.getCheckFlightById(code, date, horadespegueestimado);
 			return ResponseEntity.ok(flight);
 		} catch (Exception e) {
 			System.out.print(e.getMessage());

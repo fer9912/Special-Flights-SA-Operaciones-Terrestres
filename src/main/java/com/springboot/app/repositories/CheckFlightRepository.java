@@ -1,5 +1,7 @@
 package com.springboot.app.repositories;
 
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -13,5 +15,7 @@ public interface CheckFlightRepository
 	CheckFlightDE findByIdCheckFlight(int idCheckFlight);
 
 	CheckFlightDE findByCode(String code);
+
+	CheckFlightDE findByCodeAndFechaAndHora(String code, Date fecha, String hora);
 
 }

@@ -8,6 +8,8 @@ public class CheckFlightMapper {
 	public static CheckFlightTO mapTo(CheckFlightDE de) {
 		CheckFlightTO to = new CheckFlightTO();
 		to.setIdCheckFlight(de.getIdCheckFlight());
+		to.setFecha(de.getFecha());
+		to.setHora(de.getHora());
 		to.setA1(de.isA1());
 		to.setA2(de.isA2());
 		to.setA3(de.isA3());
@@ -70,6 +72,8 @@ public class CheckFlightMapper {
 	public static CheckFlightDE mapDe(CheckFlightTO to) {
 		CheckFlightDE de = new CheckFlightDE();
 		de.setIdCheckFlight(to.getIdCheckFlight());
+		de.setFecha(to.getFecha());
+		de.setHora(to.getHora());
 		de.setA1(to.isA1());
 		de.setA2(to.isA2());
 		de.setA3(to.isA3());
