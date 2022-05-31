@@ -32,7 +32,7 @@ public class AirportService {
 		List<AirportTO> airports = AirportMapper.mapTOList(des);
 		List<AirportTO> ret = new ArrayList<>();
 		for (AirportTO destination : airports) {
-			if (this.getDistance(origin, destination) < 31 && !destination.getIata().equals(o)) {
+			if (this.getDistance(origin, destination) < 301 && !destination.getIata().equals(o)) {
 				ret.add(destination);
 			}
 		}
