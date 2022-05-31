@@ -1,7 +1,5 @@
 package com.springboot.app.business.checkFlight.model;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +7,7 @@ import lombok.Setter;
 @Getter
 public class CheckFlightTO {
 	private int idCheckFlight;
+	private int idFlight;
 	private boolean a1;
 	private boolean a2;
 	private boolean a3;
@@ -62,9 +61,8 @@ public class CheckFlightTO {
 	private boolean d1;
 	private boolean d2;
 	private boolean d3;
+	private boolean d4;
 	private boolean e1;
-	private String code;
-	private Date fecha;
-	private String hora;
+	private boolean e2;
 
 }

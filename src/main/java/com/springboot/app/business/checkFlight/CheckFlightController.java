@@ -25,13 +25,13 @@ public class CheckFlightController {
 	private CheckFlightService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "code") String code) {
+	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "id") int id) {
 		try {
-			CheckFlightTO checkFlight = this.service.getCheckFlight(code);
+			CheckFlightTO checkFlight = this.service.getCheckFlight(id);
 			return ResponseEntity.ok(checkFlight);
 		} catch (Exception e) {
 			System.out.println(e);
-			return ResponseEntity.badRequest().body("Invalid or empty checkFlight id");
+			return ResponseEntity.badRequest().body("Invalid or empty Flight id");
 		}
 	}
 
@@ -56,21 +56,6 @@ public class CheckFlightController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return ResponseEntity.badRequest().body("Invalid date - " + e.getMessage());
-		}
-	}
-
-	@GetMapping("/getCheckFlightById")
-	public ResponseEntity<?> getFlightByCode(@RequestParam("code") String code,
-			@RequestParam(value = "fecha") String fechadespegueestimado,
-			@RequestParam(value = "hora") String horadespegueestimado) {
-		try {
-			SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-			Date date = formato.parse(fechadespegueestimado);
-			CheckFlightTO flight = this.service.getCheckFlightById(code, date, horadespegueestimado);
-			return ResponseEntity.ok(flight);
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
-			return ResponseEntity.badRequest().body("Invalid code - " + e.getMessage());
 		}
 	}
 

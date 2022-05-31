@@ -8,8 +8,7 @@ public class CheckFlightMapper {
 	public static CheckFlightTO mapTo(CheckFlightDE de) {
 		CheckFlightTO to = new CheckFlightTO();
 		to.setIdCheckFlight(de.getIdCheckFlight());
-		to.setFecha(de.getFecha());
-		to.setHora(de.getHora());
+		to.setIdFlight(de.getIdFlight());
 		to.setA1(de.isA1());
 		to.setA2(de.isA2());
 		to.setA3(de.isA3());
@@ -63,17 +62,16 @@ public class CheckFlightMapper {
 		to.setD1(de.isD1());
 		to.setD2(de.isD2());
 		to.setD3(de.isD3());
+		to.setD4(de.isD4());
 		to.setE1(de.isE1());
-		to.setCode(de.getCode());
-
+		to.setE2(de.isE2());
 		return to;
 	}
 
 	public static CheckFlightDE mapDe(CheckFlightTO to) {
 		CheckFlightDE de = new CheckFlightDE();
 		de.setIdCheckFlight(to.getIdCheckFlight());
-		de.setFecha(to.getFecha());
-		de.setHora(to.getHora());
+		de.setIdFlight(to.getIdFlight());
 		de.setA1(to.isA1());
 		de.setA2(to.isA2());
 		de.setA3(to.isA3());
@@ -127,9 +125,9 @@ public class CheckFlightMapper {
 		de.setD1(to.isD1());
 		de.setD2(to.isD2());
 		de.setD3(to.isD3());
+		de.setD4(to.isD4());
 		de.setE1(to.isE1());
-		de.setCode(to.getCode());
-
+		de.setE2(to.isE2());
 		return de;
 	}
 }

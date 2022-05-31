@@ -1,7 +1,6 @@
 package com.springboot.app.business.checkFlight.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,14 +31,8 @@ public class CheckFlightDE implements Serializable {
 	@Column(name = "id_check_flight", nullable = false)
 	private int idCheckFlight;
 
-	@Column(name = "flight_code", length = 10, nullable = true)
-	private String code;
-
-	@Column(name = "fechadespegueestimado", length = 20, nullable = true)
-	private Date fecha;
-
-	@Column(name = "horadespegueestimado", length = 10, nullable = true)
-	private String hora;
+	@Column(name = "id_flight", nullable = false)
+	private int idFlight;
 
 	@Column(name = "a1", length = 10, nullable = true)
 	private boolean a1;
@@ -200,7 +193,13 @@ public class CheckFlightDE implements Serializable {
 	@Column(name = "d3", length = 10, nullable = true)
 	private boolean d3;
 
+	@Column(name = "d4", length = 10, nullable = true)
+	private boolean d4;
+
 	@Column(name = "e1", length = 10, nullable = true)
 	private boolean e1;
+
+	@Column(name = "e2", length = 10, nullable = true)
+	private boolean e2;
 
 }

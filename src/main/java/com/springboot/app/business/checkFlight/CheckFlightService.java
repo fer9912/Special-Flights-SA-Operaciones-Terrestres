@@ -32,14 +32,8 @@ public class CheckFlightService {
 				.collect(Collectors.toList());
 	}
 
-	public CheckFlightTO getCheckFlightById(String code, Date fechadespegueestimado, String horadespegueestimado) {
-		CheckFlightDE de = checkFlightRepository.findByCodeAndFechaAndHora(code, fechadespegueestimado,
-				horadespegueestimado);
-		return CheckFlightMapper.mapTo(de);
-	}
-
-	public CheckFlightTO getCheckFlight(String code) {
-		CheckFlightDE de = checkFlightRepository.findByCode(code);
+	public CheckFlightTO getCheckFlight(int id) {
+		CheckFlightDE de = checkFlightRepository.findByIdFlight(id);
 		return CheckFlightMapper.mapTo(de);
 	}
 
