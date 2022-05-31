@@ -61,8 +61,8 @@ public class CheckFlightController {
 
 	@GetMapping("/getCheckFlightById")
 	public ResponseEntity<?> getFlightByCode(@RequestParam("code") String code,
-			@RequestParam(value = "fechadespegueestimado") String fechadespegueestimado,
-			@RequestParam(value = "horadespegueestimado") String horadespegueestimado) {
+			@RequestParam(value = "fecha") String fechadespegueestimado,
+			@RequestParam(value = "hora") String horadespegueestimado) {
 		try {
 			SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 			Date date = formato.parse(fechadespegueestimado);
