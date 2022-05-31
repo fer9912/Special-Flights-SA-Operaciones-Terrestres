@@ -48,5 +48,6 @@ public class Flight {
 	private int insumosconsumidos;
 	private int pesocargaorigen;
 	private int pesocargadestino;
+	private String motivoestado;
 
 }

@@ -26,9 +26,23 @@ public class CheckFlightService {
 	public List<Flight> getFlight(Date date) {
 		flightsGlobal = this.apisRequests.getFlights();
 		String a = date.getDate() + "-" + date.getMonth();
+		System.out.println(a);
 		return flightsGlobal.stream().filter(
 				v -> a.equals(v.getFechadespegueestimado().getDate() + "-" + v.getFechadespegueestimado().getMonth()))
 				.collect(Collectors.toList());
+	}
+
+	public Flight getFlightById(String code, String fechadespegueestimado, String horadespegueestimado) {
+		flightsGlobal = this.apisRequests.getFlights();
+		String a = fechadespegueestimado.substring(8, 10) + "-" + fechadespegueestimado.substring(5, 7);
+		System.out.println(a);
+		System.out.println(fechadespegueestimado);
+		System.out.println(horadespegueestimado);
+		return (Flight) flightsGlobal.stream()
+				.filter(v -> code.equals(v.getCodvuelo())
+						&& a.equals(
+								v.getFechadespegueestimado().getDate() + "-" + v.getFechadespegueestimado().getMonth())
+						&& horadespegueestimado.equals(v.getHoradespegueestimado()));
 	}
 
 	public CheckFlightTO getCheckFlight(String code) {
