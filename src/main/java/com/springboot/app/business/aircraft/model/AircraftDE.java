@@ -52,4 +52,7 @@ public class AircraftDE implements Serializable {
 	@Column(name = "crew_members", nullable = false)
 	private int crewMembers;
 
+	@Column(name = "velocity")
+	private int velocity;
+
 }

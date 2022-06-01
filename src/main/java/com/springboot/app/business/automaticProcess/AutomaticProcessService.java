@@ -65,21 +65,48 @@ public class AutomaticProcessService {
 			flight.setPeopleEstimate(response.getPeopleEstimate() > 300 ? 300 : response.getPeopleEstimate());
 			flight.setFlightRule(route.getFlightRule());
 			flight.setFlightType(route.getFlightType());
+			flight.setDuration(getDuration(aircraft, response.getDistance()));
+			flight.setLandingDate(getLandingDate(date, flight.getHour(), flight.getDuration()).getTime());
+			flight.setLandingHour(getLandingHour(flight.getHour(), flight.getDuration()));
 			flights.add(flight);
 		}
 		this.flightRepository.saveAll(flights);
 	}
 
+	private int getDuration(AircraftDE aircraft, int distance) {
+		return (distance / aircraft.getVelocity()) <= 0 ? 1 : (distance / aircraft.getVelocity());
+	}
+
+	private Calendar getLandingDate(Calendar fecha, String hora, int duracion) {
+		Calendar date = fecha;
+		int hour = Integer.parseInt(hora.substring(0, 2));
+		if ((hour + duracion) >= 24) {
+			date.add(Calendar.DATE, 1);
+		}
+		return date;
+	}
+
+	private String getLandingHour(String hora, int duracion) {
+		int hour = Integer.parseInt(hora.substring(0, 2));
+		int h = (hour + duracion);
+		if (h >= 24) {
+			h = h - 24;
+		}
+		if ((h + "").length() == 1) {
+			return "0" + h + hora.substring(2);
+		} else {
+			return h + hora.substring(2);
+		}
+	}
+
 	private String dateToString(Calendar date, String hour) {
-		String anio = date.get(Calendar.YEAR) + "";
+		String a = date.get(Calendar.YEAR) + "";
 		String month = (date.get(Calendar.MONTH) + 1) + "";
 		String mes = month.length() < 2 ? ("0" + month) : month;
 		String day = date.get(Calendar.DATE) + "";
 		String dia = day.length() < 2 ? ("0" + day) : day;
 		String hora = hour.replace(":", "");
-		String ret = anio.concat(mes).concat(dia).concat(hora);
-
-		return ret;
+		return a + mes + dia + hora;
 
 	}
 
