@@ -19,13 +19,11 @@ import com.springboot.app.business.passenger.model.PassengerTO;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 @CrossOrigin("*")
 @RestController
@@ -47,11 +45,8 @@ public class ReportController {
 		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
 		Map<String, Object> parameters = new HashMap();
 		JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, beanColDataSource);
-		JRDocxExporter exporter = new JRDocxExporter();
-		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));
-		response.setHeader("Content-Disposition", "attachment;filename=jasperfile.docx");
-		response.setContentType("application/octet-stream");
-		exporter.exportReport();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+		response.setContentType("application/pdf");
+		response.addHeader("Content-Disposition", "inline; filename=jasper.pdf;");
 	}
 }
