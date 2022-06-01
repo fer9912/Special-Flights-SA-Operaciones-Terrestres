@@ -14,6 +14,7 @@ import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApi
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseTO;
+import com.springboot.app.business.flightroutemaster.model.UnmannedAircraftRequest;
 import com.springboot.app.business.flightroutemaster.model.UnmannedAircraftResponse;
 import com.springboot.app.services.ApisRequests;
 
@@ -54,6 +55,17 @@ public class FlightRouteMasterController {
 			@RequestParam(value = "destination") String destination) {
 		try {
 			UnmannedAircraftResponse response = this.service.calculateOptimalAircraft(origin, destination);
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("Error to get optimal unmanned aircraft");
+		}
+	}
+
+	@PostMapping("/getUnmannedAircraftByCoords")
+	public ResponseEntity<?> getOptimalUnmannedAircraft(@RequestBody UnmannedAircraftRequest request) {
+		try {
+			UnmannedAircraftResponse response = this.service.calculateOptimalAircraft2(request.getOriginLat(),
+					request.getOriginLon(), request.getDestinationLat(), request.getDestinationLon());
 			return ResponseEntity.ok(response);
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().body("Error to get optimal unmanned aircraft");

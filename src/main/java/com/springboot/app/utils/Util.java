@@ -12,7 +12,7 @@ public class Util {
 		return calculateDistanceByHaversineFormula(a.getLon(), a.getLat(), b.getLon(), b.getLat());
 	}
 
-	private static int calculateDistanceByHaversineFormula(double lon1, double lat1, double lon2, double lat2) {
+	public static int calculateDistanceByHaversineFormula(double lon1, double lat1, double lon2, double lat2) {
 
 		double earthRadius = 6371; // km
 

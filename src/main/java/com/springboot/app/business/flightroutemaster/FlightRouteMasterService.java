@@ -94,6 +94,32 @@ public class FlightRouteMasterService {
 
 	}
 
+	public UnmannedAircraftResponse calculateOptimalAircraft2(double originLat, double originLon, double destinationLat,
+			double destinationLon) {
+		airportsGlobal = this.airportService.getAirports();
+		List<AircraftTO> aeronaves = this.aircraftService.getAircrafts();
+		aeronaves = aeronaves.stream().filter(a -> a.getPassengerCapacity() == 0).collect(Collectors.toList());
+		UnmannedAircraftResponse response = new UnmannedAircraftResponse();
+		int distancia = Util.calculateDistanceByHaversineFormula(originLon, originLat, destinationLon, destinationLat);
+		int maxDistance = Integer.MAX_VALUE;
+		AircraftTO aircraft = new AircraftTO();
+		List<String> optimals = new ArrayList<>();
+		for (AircraftTO aeronave : aeronaves) {
+			if (aeronave.getMaxDistance() > distancia && aeronave.getMaxDistance() < maxDistance) {
+				maxDistance = aeronave.getMaxDistance();
+				aircraft = aeronave;
+			}
+			if (aeronave.getMaxDistance() > distancia) {
+				optimals.add(aeronave.getModel());
+			}
+		}
+		response.setAircraftModel(aircraft.getModel());
+		response.setOptimalAircrafts(optimals);
+		response.setDistance(distancia);
+		return response;
+
+	}
+
 	private void setParameters() {
 		ParametersTO parameters = this.parametersService.getParameters();
 		promedioDePersonas = parameters.getPromedioDePersonas();
