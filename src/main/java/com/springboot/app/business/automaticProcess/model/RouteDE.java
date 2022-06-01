@@ -53,4 +53,10 @@ public class RouteDE implements Serializable {
 	@Column(name = "date", nullable = false)
 	private Date date;
 
+	@Column(name = "flight_type", length = 100)
+	private String flightType;
+
+	@Column(name = "flight_rule", length = 100)
+	private String flightRule;
+
 }

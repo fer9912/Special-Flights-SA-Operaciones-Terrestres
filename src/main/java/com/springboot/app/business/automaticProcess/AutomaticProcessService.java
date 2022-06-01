@@ -2,7 +2,6 @@ package com.springboot.app.business.automaticProcess;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,11 @@ public class AutomaticProcessService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void generateFlights() throws Exception {
-		Date date = new Date();
+		Calendar date = Calendar.getInstance();
 		String day = getDayOfWeek(date);
 		List<RouteDE> routes = this.routeRepository.findByDay(day);
 		List<FlightDE> flights = new ArrayList<>();
+		date.add(Calendar.DATE, 7);
 		for (RouteDE route : routes) {
 			List<String> destinationsToInclude = new ArrayList<>();
 			FlightRouteRequestApiTO request = new FlightRouteRequestApiTO();
@@ -50,29 +50,38 @@ public class AutomaticProcessService {
 			destinationsToInclude.add(route.getDestination());
 			request.setIncludeDestinations(destinationsToInclude);
 			FlightRouteResponseApiTO response = this.flightRouteMasterService.generateFlightRouteApi(request);
-			flight.setCode(route.getCodVuelo());
 			flight.setCompany("Special Flights SA");
 			flight.setDay(route.getDay());
-			date.setDate(date.getDate() + 7);
-			flight.setDate(date);
+			flight.setDate(date.getTime());
+			flight.setCode(route.getCodVuelo() + "-" + dateToString(date, route.getHour()));
 			flight.setOrigin(route.getOrigin());
 			flight.setDestination(route.getDestination());
 			flight.setRoute(response.getRoute().toString());
-			System.out.println(response.getAircraft());
 			AircraftDE aircraft = this.aircraftRepository.findByModel(response.getAircraft());
 			flight.setAircraft(aircraft.getId());
 			flight.setAircrafts(response.getOptimalAircrafts().toString());
 			flight.setHour(route.getHour());
-			flight.setStatus("APROBADA");
-			flight.setPeopleEstimate(response.getPeopleEstimate());
+			flight.setStatus("APROBADO");
+			flight.setPeopleEstimate(response.getPeopleEstimate() > 300 ? 300 : response.getPeopleEstimate());
+			flight.setFlightRule(route.getFlightRule());
+			flight.setFlightType(route.getFlightType());
 			flights.add(flight);
 		}
 		this.flightRepository.saveAll(flights);
 	}
 
-	private String getDayOfWeek(Date date) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+	private String dateToString(Calendar date, String hour) {
+		String año = date.get(Calendar.YEAR) + "";
+		String month = (date.get(Calendar.MONTH) + 1) + "";
+		String mes = month.length() < 2 ? ("0" + month) : month;
+		String day = date.get(Calendar.DATE) + "";
+		String dia = day.length() < 2 ? ("0" + day) : day;
+		String hora = hour.replace(":", "");
+		return año + mes + dia + hora;
+
+	}
+
+	private String getDayOfWeek(Calendar c) {
 		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 		if (dayOfWeek == 1) {
 			return "Domingo";
