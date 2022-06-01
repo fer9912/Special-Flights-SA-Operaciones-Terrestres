@@ -41,6 +41,9 @@ public class FlightDE implements Serializable {
 	@Column(name = "date", length = 20, nullable = true)
 	private Date date;
 
+	@Column(name = "landing_date", length = 20, nullable = true)
+	private Date landingDate;
+
 	@Column(name = "route", length = 100, nullable = true)
 	private String route;
 
@@ -64,4 +67,16 @@ public class FlightDE implements Serializable {
 
 	@Column(name = "people_estimate", nullable = true)
 	private int peopleEstimate;
+
+	@Column(name = "duration", nullable = true)
+	private int duration;
+
+	@Column(name = "landing_hour", length = 100, nullable = true)
+	private String landingHour;
+
+	@Column(name = "flight_type", length = 100, nullable = true)
+	private String flightType;
+
+	@Column(name = "flight_rule", length = 100, nullable = true)
+	private String flightRule;
 }

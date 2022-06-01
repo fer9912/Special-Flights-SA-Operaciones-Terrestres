@@ -19,6 +19,11 @@ public class FlightTO {
 	private String day;
 	private String hour;
 	private String aircraft;
+	private int duration;
+	private String flightType;
+	private String flightRule;
+	private String landingHour;
+	private Date landingDate;
 	private int peopleEstimate;
 	private List<String> aircrafts;
 

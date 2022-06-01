@@ -30,6 +30,11 @@ public class FlightMapper {
 		to.setAircraft(aircraftService.getAircraft(de.getAircraft()).getModel());
 		to.setAircrafts(getAircraft(de.getAircrafts()));
 		to.setPeopleEstimate(de.getPeopleEstimate());
+		to.setLandingDate(de.getLandingDate());
+		to.setLandingHour(de.getLandingHour());
+		to.setDuration(de.getDuration());
+		to.setFlightRule(de.getFlightRule());
+		to.setFlightType(de.getFlightType());
 		return to;
 	}
 
