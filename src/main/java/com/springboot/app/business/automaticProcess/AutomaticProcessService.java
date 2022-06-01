@@ -71,13 +71,15 @@ public class AutomaticProcessService {
 	}
 
 	private String dateToString(Calendar date, String hour) {
-		String año = date.get(Calendar.YEAR) + "";
+		String anio = date.get(Calendar.YEAR) + "";
 		String month = (date.get(Calendar.MONTH) + 1) + "";
 		String mes = month.length() < 2 ? ("0" + month) : month;
 		String day = date.get(Calendar.DATE) + "";
 		String dia = day.length() < 2 ? ("0" + day) : day;
 		String hora = hour.replace(":", "");
-		return año + mes + dia + hora;
+		String ret = anio.concat(mes).concat(dia).concat(hora);
+
+		return ret;
 
 	}
 

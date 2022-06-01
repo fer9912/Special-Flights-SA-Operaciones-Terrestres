@@ -38,10 +38,10 @@ public class ApisRequests {
 		// Crear un objeto de tipo URL
 		URL url = new URL(urlParaVisitar);
 
-		// Abrir la conexión e indicar que será de tipo GET
+		// Abrir la conexion e indicar que sera de tipo GET
 		HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
 		conexion.setRequestMethod("GET");
-		// Búferes para leer
+		// Buferes para leer
 		BufferedReader rd = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
 		String linea;
 		// Mientras el BufferedReader se pueda leer, agregar contenido a resultado
