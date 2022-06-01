@@ -7,5 +7,5 @@ import com.springboot.app.business.supplies.model.SuppliesDE;
 
 public interface SuppliesRepository extends JpaRepository<SuppliesDE, Long>, JpaSpecificationExecutor<SuppliesDE> {
 
-	SuppliesDE findByCode(String code);
+	SuppliesDE findByIdFlight(int id);
 }

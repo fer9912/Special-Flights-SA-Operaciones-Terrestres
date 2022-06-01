@@ -11,7 +11,7 @@ public class SuppliesMapper {
 	public static SuppliesTO mapTo(SuppliesDE de) {
 		SuppliesTO to = new SuppliesTO();
 		to.setIdSupplies(de.getIdSupplies());
-		to.setCode(de.getCode());
+		to.setIdFlight(de.getIdFlight());
 		to.setMenuEconomy(de.getMenuEconomy());
 		to.setMenuBusiness(de.getMenuBusiness());
 		to.setMenuVegetariano(de.getMenuVegetariano());

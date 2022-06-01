@@ -18,9 +18,9 @@ public class SuppliesController {
 	private SuppliesService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "code") String code) {
+	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "id") int id) {
 		try {
-			SuppliesTO supplies = this.service.getSupplies(code);
+			SuppliesTO supplies = this.service.getSupplies(id);
 			return ResponseEntity.ok(supplies);
 		} catch (Exception e) {
 			System.out.println(e);

@@ -12,8 +12,8 @@ public class SuppliesService {
 	@Autowired
 	private SuppliesRepository suppliesRepository;
 
-	public SuppliesTO getSupplies(String code) {
-		SuppliesDE de = suppliesRepository.findByCode(code);
+	public SuppliesTO getSupplies(int id) {
+		SuppliesDE de = suppliesRepository.findByIdFlight(id);
 		return SuppliesMapper.mapTo(de);
 	}
 

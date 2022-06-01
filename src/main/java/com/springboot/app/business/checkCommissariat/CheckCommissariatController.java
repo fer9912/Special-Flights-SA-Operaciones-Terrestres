@@ -20,9 +20,9 @@ public class CheckCommissariatController {
 	private CheckCommissariatService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckCommissariat(@RequestParam(value = "code") String code) {
+	public ResponseEntity<?> getCheckCommissariat(@RequestParam(value = "id") int id) {
 		try {
-			CheckCommissariatTO checkCommissariat = this.service.getCheckCommissariat(code);
+			CheckCommissariatTO checkCommissariat = this.service.getCheckCommissariat(id);
 			return ResponseEntity.ok(checkCommissariat);
 		} catch (Exception e) {
 			System.out.println(e);

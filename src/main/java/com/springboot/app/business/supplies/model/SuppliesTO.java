@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class SuppliesTO {
 	private int idSupplies;
-	private String code;
+	private int idFlight;
 	private int menuEconomy;
 	private int menuBusiness;
 	private int menuVegetariano;

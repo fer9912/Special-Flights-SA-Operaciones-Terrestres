@@ -9,7 +9,7 @@ public class CheckCommissariatMapper {
 		CheckCommissariatTO to = new CheckCommissariatTO();
 
 		to.setIdCheckCommissariat(de.getIdCheckCommissariat());
-		to.setCode(de.getCode());
+		to.setIdFlight(de.getIdFlight());
 		to.setA1(de.isA1());
 		to.setA2(de.isA2());
 		to.setA3(de.isA3());
@@ -22,7 +22,7 @@ public class CheckCommissariatMapper {
 		CheckCommissariatDE de = new CheckCommissariatDE();
 
 		de.setIdCheckCommissariat(to.getIdCheckCommissariat());
-		de.setCode(to.getCode());
+		de.setIdFlight(to.getIdFlight());
 		de.setA1(to.isA1());
 		de.setA2(to.isA2());
 		de.setA3(to.isA3());

@@ -31,8 +31,8 @@ public class CheckCommissariatDE implements Serializable {
 	@Column(name = "id_check_commissariat", nullable = false)
 	private int idCheckCommissariat;
 
-	@Column(name = "flight_code", length = 10, nullable = true)
-	private String code;
+	@Column(name = "id_flight", nullable = false)
+	private int idFlight;
 
 	@Column(name = "a1", length = 10, nullable = true)
 	private boolean a1;

@@ -31,8 +31,8 @@ public class SuppliesDE implements Serializable {
 	@Column(name = "id_supplies", nullable = true)
 	private int idSupplies;
 
-	@Column(name = "flight_code", length = 45, nullable = false)
-	private String code;
+	@Column(name = "id_flight", length = 45, nullable = false)
+	private int idFlight;
 
 	@Column(name = "menu_economy", nullable = true)
 	private int menuEconomy;
