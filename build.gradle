@@ -31,7 +31,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    implementation 'com.github.kwart.jsign:openpdf:1.3.27-jsign3'
 }
 
 

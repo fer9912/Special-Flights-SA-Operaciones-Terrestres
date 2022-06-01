@@ -34,10 +34,10 @@ public class PassengerController {
 	@GetMapping("/getAll")
 	public ResponseEntity<?> getPassengers() {
 		try {
-			List<PassengerTO> flights = this.service.getAll();
-			return ResponseEntity.ok(flights);
+			List<PassengerTO> passengers = this.service.getAll();
+			return ResponseEntity.ok(passengers);
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Error to get flights");
+			return ResponseEntity.badRequest().body("Error to get  passengers");
 		}
 	}
 
