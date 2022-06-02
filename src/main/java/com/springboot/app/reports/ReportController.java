@@ -7,9 +7,6 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,27 +43,31 @@ public class ReportController {
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> previewReport() throws JRException, IOException {
 
-		InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
+		try {
+			InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
 
-		Map<String, Object> params = new HashMap<>();
+			Map<String, Object> params = new HashMap<>();
 
-		List<PassengerTO> passengers = this.service.getAll();
-		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
+			List<PassengerTO> passengers = this.service.getAll();
+			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
 
-		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
+			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
 
-		final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+			final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 
-		HttpHeaders headers = new HttpHeaders();
+			HttpHeaders headers = new HttpHeaders();
 
-		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		String filename = "report.pdf";
+			headers.setContentType(MediaType.parseMediaType("application/pdf"));
+			String filename = "report.pdf";
 
-		headers.add("content-disposition", "inline;filename=" + filename);
+			headers.add("content-disposition", "inline;filename=" + filename);
 
-		return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
+			return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
+		} catch (JRException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 
 	}
 
@@ -90,17 +91,7 @@ public class ReportController {
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 		} catch (JRException e) {
-			// Snippet 02: Get the Log Manager Instance
-			LogManager lgMan = LogManager.getLogManager();
 
-			// Snippet 03: Get Logger from Log Manager
-			String LoggerName = Logger.GLOBAL_LOGGER_NAME;
-			Logger Logr = lgMan.getLogger(LoggerName);
-			Logr.setLevel(Level.ALL);
-
-			// Snippet 04: Perform the Logging
-			Logr.log(Level.INFO, "First Log Entry");
-			Logr.log(Level.INFO, "Second Log Entry");
 			e.printStackTrace();
 
 		}
