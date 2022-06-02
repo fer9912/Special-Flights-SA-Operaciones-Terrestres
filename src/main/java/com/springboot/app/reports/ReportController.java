@@ -43,32 +43,27 @@ public class ReportController {
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> previewReport() throws JRException, IOException {
 
-		try {
-			InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
+		InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
 
-			Map<String, Object> params = new HashMap<>();
+		Map<String, Object> params = new HashMap<>();
 
-			List<PassengerTO> passengers = this.service.getAll();
-			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
+		List<PassengerTO> passengers = this.service.getAll();
+		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
 
-			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
 
-			final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+		final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 
-			HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 
-			headers.setContentType(MediaType.parseMediaType("application/pdf"));
-			String filename = "report.pdf";
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		String filename = "report.pdf";
 
-			headers.add("content-disposition", "inline;filename=" + filename);
+		headers.add("content-disposition", "inline;filename=" + filename);
 
-			return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
-		} catch (JRException e) {
-
-			e.printStackTrace();
-		}
+		return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
 
 	}
 
