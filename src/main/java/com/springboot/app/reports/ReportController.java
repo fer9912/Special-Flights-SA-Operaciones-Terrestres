@@ -7,6 +7,9 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -87,7 +90,17 @@ public class ReportController {
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 		} catch (JRException e) {
-			// TODO Auto-generated catch block
+			// Snippet 02: Get the Log Manager Instance
+			LogManager lgMan = LogManager.getLogManager();
+
+			// Snippet 03: Get Logger from Log Manager
+			String LoggerName = Logger.GLOBAL_LOGGER_NAME;
+			Logger Logr = lgMan.getLogger(LoggerName);
+			Logr.setLevel(Level.ALL);
+
+			// Snippet 04: Perform the Logging
+			Logr.log(Level.INFO, "First Log Entry");
+			Logr.log(Level.INFO, "Second Log Entry");
 			e.printStackTrace();
 
 		}
