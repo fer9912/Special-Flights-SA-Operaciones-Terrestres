@@ -53,11 +53,11 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="40" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<staticText>
-				<reportElement x="30" y="0" width="480" height="40" uuid="4931948d-f26a-41cd-a163-3145e46b8a95"/>
+				<reportElement x="40" y="10" width="480" height="40" uuid="4931948d-f26a-41cd-a163-3145e46b8a95"/>
 				<textElement>
-					<font fontName="Arial" size="18"/>
+					<font fontName="SansSerif" size="18"/>
 				</textElement>
 				<text><![CDATA[Reporte de condiciones medicas por pasajeros]]></text>
 			</staticText>
@@ -71,14 +71,14 @@
 			<textField>
 				<reportElement x="30" y="0" width="170" height="30" uuid="14c98b53-e620-4fc4-973e-d3041b29e023"/>
 				<textElement>
-					<font fontName="Arial" size="14"/>
+					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Condición Médica"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="0" width="100" height="30" uuid="b58945a6-5f6b-4021-ac86-76153731bcad"/>
 				<textElement>
-					<font fontName="Arial" size="14"/>
+					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Cantidad"]]></textFieldExpression>
 			</textField>
@@ -89,14 +89,14 @@
 			<textField>
 				<reportElement x="30" y="0" width="170" height="30" uuid="551cbe20-fe8b-4144-8335-45afc17d12b1"/>
 				<textElement>
-					<font fontName="Arial" size="14"/>
+					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{medicalCondition}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="0" width="170" height="30" uuid="5360dfff-3080-4628-a4a5-556ddff36c7b"/>
 				<textElement>
-					<font fontName="Arial" size="14"/>
+					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Group1_COUNT}]]></textFieldExpression>
 			</textField>
