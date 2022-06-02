@@ -59,6 +59,9 @@ public class FlightDE implements Serializable {
 	@Column(name = "hour", length = 100, nullable = true)
 	private String hour;
 
+	@Column(name = "route_code", length = 100)
+	private String routeCode;
+
 	@Column(name = "aircraft", nullable = true)
 	private int aircraft;
 
@@ -79,4 +82,10 @@ public class FlightDE implements Serializable {
 
 	@Column(name = "flight_rule", length = 100, nullable = true)
 	private String flightRule;
+
+	@Column(name = "fuel_consumption")
+	private int fuelConsumption;
+
+	@Column(name = "lubricant_consumption")
+	private int lubricantConsumption;
 }

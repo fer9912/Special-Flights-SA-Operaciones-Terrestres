@@ -68,6 +68,9 @@ public class AutomaticProcessService {
 			flight.setDuration(getDuration(aircraft, response.getDistance()));
 			flight.setLandingDate(getLandingDate(date, flight.getHour(), flight.getDuration()).getTime());
 			flight.setLandingHour(getLandingHour(flight.getHour(), flight.getDuration()));
+			flight.setFuelConsumption(response.getCombustibleEstimado());
+			flight.setLubricantConsumption(response.getLubricanteEstimado());
+			flight.setRouteCode(route.getCodVuelo());
 			flights.add(flight);
 		}
 		this.flightRepository.saveAll(flights);

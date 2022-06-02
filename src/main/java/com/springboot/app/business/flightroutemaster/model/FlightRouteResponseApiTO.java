@@ -14,4 +14,6 @@ public class FlightRouteResponseApiTO {
 	private List<String> route;
 	private String day;
 	private int peopleEstimate;
+	private int combustibleEstimado;
+	private int lubricanteEstimado;
 }

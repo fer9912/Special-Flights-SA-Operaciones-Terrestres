@@ -18,4 +18,6 @@ public class FlightRouteResponseTO {
 	private List<AirportTO> route;
 	private String day;
 	private int peopleEstimate;
+	private int combustibleEstimado;
+	private int lubricanteEstimado;
 }

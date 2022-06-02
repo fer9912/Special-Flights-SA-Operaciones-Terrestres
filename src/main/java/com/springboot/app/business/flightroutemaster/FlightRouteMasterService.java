@@ -66,7 +66,21 @@ public class FlightRouteMasterService {
 		response.setOptimalAircrafts(getOptimalAirCrafts(response));
 		response.setDistance(getDistance(response.getRoute()));
 		response.setPeopleEstimate(getPeopleEstimate(response.getRoute()));
+		response.setCombustibleEstimado(calcularConsumoCombustible(response));
+		response.setLubricanteEstimado(calcularConsumoLubricante(response));
 		return response;
+	}
+
+	private int calcularConsumoCombustible(FlightRouteResponseTO response) {
+		int distance = response.getDistance();
+		int consumoCombustible = response.getAircraft().getFuelConsumption();
+		return distance * consumoCombustible;
+	}
+
+	private int calcularConsumoLubricante(FlightRouteResponseTO response) {
+		int distance = response.getDistance() / 1000;
+		int consumoLubricante = response.getAircraft().getLubricantConsumption();
+		return distance * consumoLubricante;
 	}
 
 	public UnmannedAircraftResponse calculateOptimalAircraft(String origin, String destination) {
@@ -708,6 +722,8 @@ public class FlightRouteMasterService {
 			res.setDistance(response.getDistance());
 			res.setDay(response.getDay());
 			res.setPeopleEstimate(response.getPeopleEstimate());
+			res.setCombustibleEstimado(response.getCombustibleEstimado());
+			res.setLubricanteEstimado(response.getLubricanteEstimado());
 		}
 		return res;
 	}

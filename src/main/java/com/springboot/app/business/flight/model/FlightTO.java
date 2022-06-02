@@ -25,6 +25,9 @@ public class FlightTO {
 	private String landingHour;
 	private Date landingDate;
 	private int peopleEstimate;
+	private int fuelConsumption;
+	private int lubricantConsumption;
+	private String routeCode;
 	private List<String> aircrafts;
 
 }

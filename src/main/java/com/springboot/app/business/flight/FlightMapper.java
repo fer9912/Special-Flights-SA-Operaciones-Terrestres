@@ -35,6 +35,9 @@ public class FlightMapper {
 		to.setDuration(de.getDuration());
 		to.setFlightRule(de.getFlightRule());
 		to.setFlightType(de.getFlightType());
+		to.setRouteCode(de.getRouteCode());
+		to.setLubricantConsumption(de.getLubricantConsumption());
+		to.setFuelConsumption(de.getFuelConsumption());
 		return to;
 	}
 
