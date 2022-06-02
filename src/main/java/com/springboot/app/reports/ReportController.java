@@ -70,8 +70,8 @@ public class ReportController {
 			headers.add("content-disposition", "inline;filename=" + filename);
 
 			return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
-		} catch (JRException e) {
-			log.info("todo mal");
+		} catch (Exception e) {
+			log.info("todo mal" + e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
 		}
@@ -99,8 +99,8 @@ public class ReportController {
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 			log.info("todo bien");
-		} catch (JRException e) {
-			log.info("todo mal");
+		} catch (Exception e) {
+			log.info("todo mal" + e);
 			e.printStackTrace();
 
 		}
