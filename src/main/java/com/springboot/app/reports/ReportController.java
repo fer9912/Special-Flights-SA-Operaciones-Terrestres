@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,27 +41,29 @@ public class ReportController {
 
 	@Autowired
 	private PassengerService service;
+	static Logger log = Logger.getLogger(ReportController.class);
 
 	@ExceptionHandler(Exception.class)
 	@RequestMapping(value = "/preview", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> previewReport() throws JRException, IOException {
 
 		try {
+			log.info("busco el jasper");
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
-
 			Map<String, Object> params = new HashMap<>();
-
+			log.info("levanto pasajeros");
 			List<PassengerTO> passengers = this.service.getAll();
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
-
+			log.info("llena reporte");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
 
+			log.info("conf salida");
 			final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 
 			HttpHeaders headers = new HttpHeaders();
-
+			log.info("todo bien");
 			headers.setContentType(MediaType.parseMediaType("application/pdf"));
 			String filename = "report.pdf";
 
@@ -68,7 +71,9 @@ public class ReportController {
 
 			return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
 		} catch (JRException e) {
+			log.info("todo mal");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
 		}
 
 	}
@@ -78,22 +83,24 @@ public class ReportController {
 	public void downloadReport(HttpServletResponse response) throws JRException, IOException {
 
 		try {
+			log.info("busco el jasper");
 			InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
 			Map<String, Object> params = new HashMap<>();
-
+			log.info("levanto pasajeros");
 			List<PassengerTO> passengers = this.service.getAll();
 			JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
-
+			log.info("llena reporte");
 			JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
-
+			log.info("conf salida");
 			response.setContentType("application/x-pdf");
 			response.setHeader("Content-disposition", "attachment; filename=report.pdf");
-
+			log.info("carga la salida");
 			final OutputStream outStream = response.getOutputStream();
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+			log.info("todo bien");
 		} catch (JRException e) {
-
+			log.info("todo mal");
 			e.printStackTrace();
 
 		}
