@@ -1,7 +1,9 @@
 package com.springboot.app.reports;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,44 +11,78 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.passenger.PassengerService;
 import com.springboot.app.business.passenger.model.PassengerTO;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/document")
+@RequestMapping("report")
 public class ReportController {
 
 	@Autowired
 	private PassengerService service;
 
-	@GetMapping()
-	public void getDocument(HttpServletResponse response) throws IOException, JRException {
+	@RequestMapping(value = "/preview", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> previewReport() throws JRException, IOException {
+		InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
 
-		InputStream stream = this.getClass().getResourceAsStream("/passenger.jrxml");
-		JasperReport report = JasperCompileManager.compileReport(stream);
+		Map<String, Object> params = new HashMap<>();
 
 		List<PassengerTO> passengers = this.service.getAll();
-		System.out.println(passengers);
-
 		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
-		Map<String, Object> parameters = new HashMap();
-		JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, beanColDataSource);
-		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
-		response.setContentType("application/pdf");
-		response.addHeader("Content-Disposition", "inline; filename=jasper.pdf;");
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
+
+		final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		String filename = "report.pdf";
+
+		headers.add("content-disposition", "inline;filename=" + filename);
+
+		return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	@ResponseBody
+	public void downloadReport(HttpServletResponse response) throws JRException, IOException {
+
+		InputStream jasperStream = this.getClass().getResourceAsStream("/report/passenger.jasper");
+		Map<String, Object> params = new HashMap<>();
+
+		List<PassengerTO> passengers = this.service.getAll();
+		JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(passengers);
+
+		JasperReport jasperReport = (JasperReport) JRLoader.loadObject(jasperStream);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, beanColDataSource);
+
+		response.setContentType("application/x-pdf");
+		response.setHeader("Content-disposition", "attachment; filename=report.pdf");
+
+		final OutputStream outStream = response.getOutputStream();
+		JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+	}
+
 }
