@@ -37,4 +37,11 @@
 		<nature>org.springframework.ide.eclipse.core.springnature</nature>
 		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>passenger (1).jasper</name>
+			<type>1</type>
+			<location>C:/Users/COREBI/Downloads/passenger (1).jasper</location>
+		</link>
+	</linkedResources>
 </projectDescription>
