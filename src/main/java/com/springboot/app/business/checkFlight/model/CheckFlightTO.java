@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class CheckFlightTO {
 	private int idCheckFlight;
-	private int idFlight;
+	private String idFlight;
 	private boolean a1;
 	private boolean a2;
 	private boolean a3;

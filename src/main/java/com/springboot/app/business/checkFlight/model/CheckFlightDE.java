@@ -32,7 +32,7 @@ public class CheckFlightDE implements Serializable {
 	private int idCheckFlight;
 
 	@Column(name = "id_flight", nullable = false)
-	private int idFlight;
+	private String idFlight;
 
 	@Column(name = "a1", length = 10, nullable = true)
 	private boolean a1;

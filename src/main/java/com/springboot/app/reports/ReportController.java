@@ -63,11 +63,12 @@ public class ReportController {
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
 
 			HttpHeaders headers = new HttpHeaders();
-			log.info("todo bien");
+
 			headers.setContentType(MediaType.parseMediaType("application/pdf"));
 			String filename = "report.pdf";
 
 			headers.add("content-disposition", "inline;filename=" + filename);
+			log.info("todo bien");
 
 			return new ResponseEntity<byte[]>(outStream.toByteArray(), headers, HttpStatus.OK);
 		} catch (Exception e) {

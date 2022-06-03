@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Flight {
-	private int idvuelo;
-	private String codvuelo;
+	private String idvuelo;
 	private String estado;
 	private String aeronave_matricula_fk;
 	private String modeloaeronave;
