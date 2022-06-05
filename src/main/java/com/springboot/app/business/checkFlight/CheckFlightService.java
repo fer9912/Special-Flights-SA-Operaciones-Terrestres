@@ -32,7 +32,7 @@ public class CheckFlightService {
 				.collect(Collectors.toList());
 	}
 
-	public CheckFlightTO getCheckFlight(int id) {
+	public CheckFlightTO getCheckFlight(String id) {
 		CheckFlightDE de = checkFlightRepository.findByIdFlight(id);
 		return CheckFlightMapper.mapTo(de);
 	}

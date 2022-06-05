@@ -25,7 +25,7 @@ public class CheckFlightController {
 	private CheckFlightService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "id") int id) {
+	public ResponseEntity<?> getCheckFlight(@RequestParam(value = "id") String id) {
 		try {
 			CheckFlightTO checkFlight = this.service.getCheckFlight(id);
 			return ResponseEntity.ok(checkFlight);

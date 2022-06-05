@@ -10,6 +10,6 @@ import com.springboot.app.business.checkCommissariat.model.CheckCommissariatDE;
 public interface CheckCommissariatRepository
 		extends JpaRepository<CheckCommissariatDE, Long>, JpaSpecificationExecutor<CheckCommissariatDE> {
 
-	CheckCommissariatDE findByIdFlight(int id);
+	CheckCommissariatDE findByIdFlight(String id);
 
 }

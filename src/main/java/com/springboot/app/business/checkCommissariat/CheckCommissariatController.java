@@ -20,7 +20,7 @@ public class CheckCommissariatController {
 	private CheckCommissariatService service;
 
 	@GetMapping("/get")
-	public ResponseEntity<?> getCheckCommissariat(@RequestParam(value = "id") int id) {
+	public ResponseEntity<?> getCheckCommissariat(@RequestParam(value = "id") String id) {
 		try {
 			CheckCommissariatTO checkCommissariat = this.service.getCheckCommissariat(id);
 			return ResponseEntity.ok(checkCommissariat);
