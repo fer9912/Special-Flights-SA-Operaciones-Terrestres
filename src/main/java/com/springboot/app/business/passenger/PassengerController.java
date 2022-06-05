@@ -2,7 +2,6 @@ package com.springboot.app.business.passenger;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.app.business.passenger.model.PassengerTO;
-import com.springboot.app.reports.ReportController;
 
 @CrossOrigin("*")
 @RestController
@@ -22,7 +20,6 @@ import com.springboot.app.reports.ReportController;
 public class PassengerController {
 	@Autowired
 	private PassengerService service;
-	static Logger log = Logger.getLogger(ReportController.class);
 
 	@GetMapping("/get")
 	public ResponseEntity<?> getPassenger(@RequestParam(value = "id") int id) {

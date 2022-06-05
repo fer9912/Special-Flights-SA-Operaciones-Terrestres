@@ -49,5 +49,6 @@ public class Flight {
 	private int pesocargaorigen;
 	private int pesocargadestino;
 	private String motivoestado;
+	private String[] aeronavesposibles;
 
 }
