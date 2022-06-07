@@ -12,6 +12,7 @@ import com.springboot.app.business.checkFlight.model.CheckFlightDE;
 import com.springboot.app.business.checkFlight.model.CheckFlightTO;
 import com.springboot.app.repositories.CheckFlightRepository;
 import com.springboot.app.services.ApisRequests;
+import com.springboot.app.services.model.CrewXFlight;
 import com.springboot.app.services.model.Flight;
 
 @Service
@@ -19,6 +20,7 @@ public class CheckFlightService {
 	@Autowired
 	private CheckFlightRepository checkFlightRepository;
 	List<Flight> flightsGlobal = new ArrayList<>();
+	List<CrewXFlight> crew = new ArrayList<>();
 
 	@Autowired
 	private ApisRequests apisRequests;
@@ -30,6 +32,16 @@ public class CheckFlightService {
 		return flightsGlobal.stream().filter(
 				v -> a.equals(v.getFechadespegueestimado().getDate() + "-" + v.getFechadespegueestimado().getMonth()))
 				.collect(Collectors.toList());
+	}
+
+	public String getCrew(String idVuelo) {
+		String crewString = "";
+		crew = this.apisRequests.getCrew(idVuelo);
+
+		for (CrewXFlight c : crew) {
+			crewString = crewString + c.getNombre() + " " + c.getApellido() + ", ";
+		}
+		return crewString.substring(0, crewString.length() - 2);
 	}
 
 	public CheckFlightTO getCheckFlight(String id) {

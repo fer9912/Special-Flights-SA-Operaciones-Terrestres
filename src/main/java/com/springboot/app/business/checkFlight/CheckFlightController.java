@@ -59,4 +59,17 @@ public class CheckFlightController {
 		}
 	}
 
+	@GetMapping("/getCrew")
+	public ResponseEntity<?> getCrew(@RequestParam(value = "id") String idVuelo) {
+		try {
+
+			String crew = this.service.getCrew(idVuelo);
+
+			return ResponseEntity.ok(crew);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return ResponseEntity.badRequest().body("Invalid or empty Flight id");
+		}
+	}
+
 }
