@@ -34,7 +34,6 @@ public class UserController {
 	public ResponseEntity<?> getRole(@RequestParam(value = "user") String user) {
 		try {
 			RoleDE ret = this.service.getRole(user);
-			System.out.println(ret.getName());
 			return ResponseEntity.ok(ret);
 		} catch (Exception e) {
 			return ResponseEntity.ok(e.getMessage());

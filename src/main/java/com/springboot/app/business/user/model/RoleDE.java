@@ -31,8 +31,8 @@ public class RoleDE implements Serializable {
 	@Column(name = "id", nullable = true)
 	private String id;
 
-	@Column(name = "name", length = 45, nullable = false)
-	private String name;
+	@Column(name = "role", length = 45, nullable = false)
+	private String role;
 
 	@Column(name = "rute_fligth_master", length = 10, nullable = true)
 	private boolean ruteFligthMaster;
