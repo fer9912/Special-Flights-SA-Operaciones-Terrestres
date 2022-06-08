@@ -29,7 +29,7 @@ public class UserDE implements Serializable {
 
 	@Id
 	@Column(name = "id_user", nullable = true)
-	private String id;
+	private int id;
 
 	@Column(name = "user", length = 45, nullable = false)
 	private String user;
@@ -45,5 +45,8 @@ public class UserDE implements Serializable {
 
 	@Column(name = "name", length = 100, nullable = true)
 	private String name;
+
+	@Column(name = "rol", nullable = true)
+	private int rol;
 
 }
