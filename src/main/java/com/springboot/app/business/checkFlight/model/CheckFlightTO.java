@@ -64,5 +64,6 @@ public class CheckFlightTO {
 	private boolean d4;
 	private boolean e1;
 	private boolean e2;
+	private boolean validacionFinal;
 
 }

@@ -202,4 +202,7 @@ public class CheckFlightDE implements Serializable {
 	@Column(name = "e2", length = 10, nullable = true)
 	private boolean e2;
 
+	@Column(name = "validacion_final", length = 10, nullable = true)
+	private boolean validacionFinal;
+
 }

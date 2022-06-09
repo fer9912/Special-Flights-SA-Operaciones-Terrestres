@@ -13,6 +13,8 @@ import com.springboot.app.business.baggage.model.BaggageResponse;
 import com.springboot.app.business.passenger.model.PassengerDE;
 import com.springboot.app.repositories.BaggageRepository;
 import com.springboot.app.repositories.PassengerRepository;
+import com.springboot.app.services.ApisRequests;
+import com.springboot.app.services.model.Flight;
 
 @Service
 public class BaggageService {
@@ -23,19 +25,42 @@ public class BaggageService {
 	@Autowired
 	private PassengerRepository passengerRepository;
 
+	@Autowired
+	private ApisRequests apiRequest;
+
 	public List<BaggageResponse> getBaggages(BaggageRequest request) {
 		List<BaggageResponse> response = new ArrayList<>();
+		String lastFlight = "";
+		String lastFlightStatus = "";
 
 		List<BaggageDE> baggages = searchBaggages(request);
 
 		for (BaggageDE baggage : baggages) {
 			BaggageResponse resp = new BaggageResponse();
 
+			try {
+				if (baggage.getIdVuelo().equals(lastFlight)) {
+					resp.setStatus(lastFlightStatus);
+					baggage.setEstado(lastFlightStatus);
+					baggageRepository.save(baggage);
+				} else {
+					List<Flight> flightResp = apiRequest.getFlight(baggage.getIdVuelo());
+					Flight flight = flightResp.get(0);
+					resp.setStatus(flight.getEstado().toUpperCase());
+					lastFlight = flight.getIdvuelo();
+					lastFlightStatus = flight.getEstado().toUpperCase();
+					baggage.setEstado(flight.getEstado().toUpperCase());
+					baggageRepository.save(baggage);
+				}
+			} catch (Exception e) {
+				resp.setStatus(baggage.getEstado());
+			}
+
 			resp.setBaggageId(String.valueOf(baggage.getId()));
 			resp.setFlightId(baggage.getIdVuelo());
 			resp.setBaggageType(baggage.getTipo());
 			resp.setWeight(String.valueOf(baggage.getWeight()));
-			resp.setStatus(baggage.getEstado());
+
 			resp.setIsPassengerBaggage(String.valueOf(baggage.getBoolPassenger()));
 
 			if (baggage.getBoolPassenger() == 'Y') {
