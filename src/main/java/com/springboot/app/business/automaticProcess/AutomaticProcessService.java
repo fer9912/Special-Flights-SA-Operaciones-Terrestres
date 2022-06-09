@@ -1,8 +1,10 @@
 package com.springboot.app.business.automaticProcess;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,10 @@ import com.springboot.app.business.flight.model.FlightDE;
 import com.springboot.app.business.flightroutemaster.FlightRouteMasterService;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
+import com.springboot.app.bussines.log.model.LogDE;
 import com.springboot.app.repositories.AircraftRepository;
 import com.springboot.app.repositories.FlightRepository;
+import com.springboot.app.repositories.LogRepository;
 import com.springboot.app.repositories.RouteRepository;
 
 @Service
@@ -28,9 +32,16 @@ public class AutomaticProcessService {
 	private AircraftRepository aircraftRepository;
 	@Autowired
 	private FlightRepository flightRepository;
+	@Autowired
+	private LogRepository logRepository;
 
 	@Transactional(rollbackFor = Exception.class)
 	public void generateFlights() throws Exception {
+		LogDE log = new LogDE();
+		Optional<LogDE> optLog = logRepository.findById("GenerateFlights");
+		if (optLog.isPresent()) {
+			log = optLog.get();
+		}
 		Calendar date = Calendar.getInstance();
 		String day = getDayOfWeek(date);
 		List<RouteDE> routes = this.routeRepository.findByDay(day);
@@ -74,6 +85,9 @@ public class AutomaticProcessService {
 			flights.add(flight);
 		}
 		this.flightRepository.saveAll(flights);
+		log.setLastExecution(LocalDateTime.now());
+		logRepository.save(log);
+
 	}
 
 	private int getDuration(AircraftDE aircraft, int distance) {
