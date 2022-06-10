@@ -41,6 +41,9 @@ public class FlightDE implements Serializable {
 	@Column(name = "date", length = 20, nullable = true)
 	private Date date;
 
+	@Column(name = "create_date", length = 20, nullable = true)
+	private Date createDate;
+
 	@Column(name = "landing_date", length = 20, nullable = true)
 	private Date landingDate;
 

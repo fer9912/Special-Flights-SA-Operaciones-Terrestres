@@ -68,6 +68,7 @@ public class AutomaticProcessService {
 			flight.setCompany("Special Flights SA");
 			flight.setDay(route.getDay());
 			flight.setDate(date.getTime());
+			flight.setCreateDate(Calendar.getInstance().getTime());
 			flight.setCode(route.getCodVuelo() + "-" + dateToString(date, route.getHour()));
 			flight.setOrigin(route.getOrigin());
 			flight.setDestination(route.getDestination());
