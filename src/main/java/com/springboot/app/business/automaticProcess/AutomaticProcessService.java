@@ -21,6 +21,8 @@ import com.springboot.app.repositories.AircraftRepository;
 import com.springboot.app.repositories.FlightRepository;
 import com.springboot.app.repositories.LogRepository;
 import com.springboot.app.repositories.RouteRepository;
+import com.springboot.app.services.ApisRequests;
+import com.springboot.app.services.model.Flight;
 
 @Service
 public class AutomaticProcessService {
@@ -34,6 +36,8 @@ public class AutomaticProcessService {
 	private FlightRepository flightRepository;
 	@Autowired
 	private LogRepository logRepository;
+	@Autowired
+	private ApisRequests apiRequest;
 
 	@Transactional(rollbackFor = Exception.class)
 	public void generateFlights() throws Exception {
@@ -151,6 +155,29 @@ public class AutomaticProcessService {
 			return "Sabado";
 		}
 		return "";
+	}
+
+	public void getFlightStatus() {
+		List<FlightDE> flights = flightRepository.findByFlightStatus();
+
+		for (FlightDE flight : flights) {
+
+			try {
+				List<Flight> flightsUpdated = apiRequest.getFlight(flight.getCode());
+				Flight flightUpdate = flightsUpdated.get(0);
+
+				flight.setStatus(flightUpdate.getEstado().toUpperCase());
+				flightRepository.save(flight);
+			} catch (Exception e) {
+
+				continue;
+			}
+
+		}
+	}
+
+	public void getBaggageInfo() {
+
 	}
 
 }
