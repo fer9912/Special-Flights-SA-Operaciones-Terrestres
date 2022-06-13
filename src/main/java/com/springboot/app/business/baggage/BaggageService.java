@@ -61,7 +61,7 @@ public class BaggageService {
 			resp.setBaggageType(baggage.getTipo());
 			resp.setBaggageCategory(baggage.getCategoria());
 			resp.setWeight(String.valueOf(baggage.getWeight()));
-			resp.setStatusCargo(baggage.getEstadoCarga());
+			resp.setStatusCargo(baggage.getEstadoCarga().toUpperCase());
 
 			PassengerDE passenger = passengerRepository.findByIdPassenger(baggage.getIdPassenger());
 			resp.setDocType(passenger.getDocType());
