@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springboot.app.services.model.Baggage;
 import com.springboot.app.services.model.CrewXFlight;
 import com.springboot.app.services.model.Flight;
 
@@ -72,6 +73,24 @@ public class ApisRequests {
 		}
 		return ret;
 
+	}
+
+	public List<Baggage> getBaggage(String idVuelo) {
+		List<Baggage> ret = new ArrayList<>();
+		String respuesta = "";
+		String url = "https://opr-terrestres.herokuapp.com/v1/losilegales/cargas/";
+		url = url.concat(idVuelo);
+
+		try {
+			respuesta = peticionHttpGet(url);
+			ObjectMapper objectMapper = new ObjectMapper();
+			ret = objectMapper.readValue(respuesta, new TypeReference<List<Baggage>>() {
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ret;
 	}
 
 	public static String peticionHttpGet(String urlParaVisitar) throws Exception {

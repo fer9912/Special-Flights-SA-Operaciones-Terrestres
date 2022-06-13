@@ -41,7 +41,7 @@ public class BaggageService {
 			try {
 				if (baggage.getIdVuelo().equals(lastFlight)) {
 					resp.setStatus(lastFlightStatus);
-					baggage.setEstado(lastFlightStatus);
+					baggage.setEstadoVuelo(lastFlightStatus);
 					baggageRepository.save(baggage);
 				} else {
 					List<Flight> flightResp = apiRequest.getFlight(baggage.getIdVuelo());
@@ -49,11 +49,11 @@ public class BaggageService {
 					resp.setStatus(flight.getEstado().toUpperCase());
 					lastFlight = flight.getIdvuelo();
 					lastFlightStatus = flight.getEstado().toUpperCase();
-					baggage.setEstado(flight.getEstado().toUpperCase());
+					baggage.setEstadoVuelo(flight.getEstado().toUpperCase());
 					baggageRepository.save(baggage);
 				}
 			} catch (Exception e) {
-				resp.setStatus(baggage.getEstado());
+				resp.setStatus(baggage.getEstadoVuelo());
 			}
 
 			resp.setBaggageId(String.valueOf(baggage.getId()));
@@ -61,18 +61,9 @@ public class BaggageService {
 			resp.setBaggageType(baggage.getTipo());
 			resp.setWeight(String.valueOf(baggage.getWeight()));
 
-			resp.setIsPassengerBaggage(String.valueOf(baggage.getBoolPassenger()));
-
-			if (baggage.getBoolPassenger() == 'Y') {
-
-				PassengerDE passenger = passengerRepository.findByIdPassenger(baggage.getIdPassenger());
-
-				resp.setDocType(passenger.getDocType());
-				resp.setDocumentNumber(passenger.getDocNumber());
-			} else {
-				resp.setDocType("-");
-				resp.setDocumentNumber("-");
-			}
+			PassengerDE passenger = passengerRepository.findByIdPassenger(baggage.getIdPassenger());
+			resp.setDocType(passenger.getDocType());
+			resp.setDocumentNumber(passenger.getDocNumber());
 
 			response.add(resp);
 		}

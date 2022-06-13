@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.app.business.aircraft.model.AircraftDE;
 import com.springboot.app.business.automaticProcess.model.RouteDE;
+import com.springboot.app.business.baggage.model.BaggageDE;
 import com.springboot.app.business.flight.model.FlightDE;
 import com.springboot.app.business.flightroutemaster.FlightRouteMasterService;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteRequestApiTO;
 import com.springboot.app.business.flightroutemaster.model.FlightRouteResponseApiTO;
 import com.springboot.app.bussines.log.model.LogDE;
 import com.springboot.app.repositories.AircraftRepository;
+import com.springboot.app.repositories.BaggageRepository;
 import com.springboot.app.repositories.FlightRepository;
 import com.springboot.app.repositories.LogRepository;
 import com.springboot.app.repositories.RouteRepository;
 import com.springboot.app.services.ApisRequests;
+import com.springboot.app.services.model.Baggage;
 import com.springboot.app.services.model.Flight;
 
 @Service
@@ -36,6 +40,8 @@ public class AutomaticProcessService {
 	private FlightRepository flightRepository;
 	@Autowired
 	private LogRepository logRepository;
+	@Autowired
+	private BaggageRepository baggageRepository;
 	@Autowired
 	private ApisRequests apiRequest;
 
@@ -90,7 +96,7 @@ public class AutomaticProcessService {
 			flights.add(flight);
 		}
 		this.flightRepository.saveAll(flights);
-		log.setLastExecution(LocalDateTime.now());
+		log.setLastExecution(LocalDateTime.now().minusHours(3));
 		logRepository.save(log);
 
 	}
@@ -178,6 +184,38 @@ public class AutomaticProcessService {
 	}
 
 	public void getBaggageInfo() {
+
+		List<FlightDE> flights = flightRepository.findAll();
+
+		for (FlightDE flight : flights) {
+			List<BaggageDE> baggage = baggageRepository.findByIdVueloOrderByIdPassenger(flight.getCode());
+
+			if (!baggage.isEmpty()) {
+				continue;
+			}
+
+			List<Baggage> bagg = apiRequest.getBaggage(flight.getCode());
+
+			if (!bagg.isEmpty()) {
+				for (Baggage cargo : bagg) {
+					BaggageDE carg = new BaggageDE();
+
+					Random ran = new Random();
+
+					int nxt = ran.nextInt(400);
+
+					carg.setIdPassenger(nxt);
+					carg.setIdVuelo(cargo.getCodigo());
+					carg.setTipo(cargo.getTipo().toUpperCase());
+					carg.setCategoria(cargo.getTag().toUpperCase());
+					carg.setWeight(cargo.getPeso());
+					carg.setEstadoCarga(cargo.getEstadoCarga());
+
+					baggageRepository.save(carg);
+
+				}
+			}
+		}
 
 	}
 

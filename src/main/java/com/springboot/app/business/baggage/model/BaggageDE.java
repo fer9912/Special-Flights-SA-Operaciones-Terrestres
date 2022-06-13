@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -30,6 +32,7 @@ public class BaggageDE implements Serializable {
 	private static final long serialVersionUID = -6077602061243220714L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cargo", nullable = true)
 	private Long id;
 
@@ -37,7 +40,7 @@ public class BaggageDE implements Serializable {
 	private String tipo;
 
 	@Column(name = "weight", nullable = true)
-	private double weight;
+	private Integer weight;
 
 	@Column(name = "id_passenger", nullable = true)
 	private Integer idPassenger;
@@ -45,10 +48,13 @@ public class BaggageDE implements Serializable {
 	@Column(name = "id_vuelo", nullable = true)
 	private String idVuelo;
 
-	@Column(name = "passenger_bool", nullable = true)
-	private char boolPassenger;
+	@Column(name = "estado_vuelo", nullable = true)
+	private String estadoVuelo;
 
-	@Column(name = "estado", nullable = true)
-	private String estado;
+	@Column(name = "categoria", nullable = true)
+	private String categoria;
+
+	@Column(name = "estado_carga", nullable = true)
+	private String estadoCarga;
 
 }
