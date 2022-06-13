@@ -15,14 +15,6 @@ public class PassengerMapper {
 		to.setDocType(de.getDocType());
 		to.setDocNumber(de.getDocNumber());
 		to.setNationality(de.getNationality());
-		to.setAge(de.getAge());
-		to.setSex(de.getSex());
-		to.setClassFlight(de.getClassFlight());
-		to.setMenuType(de.getMenuType());
-		to.setMedicalCondition(de.getMedicalCondition());
-		to.setBaggage(de.getBaggage());
-		to.setIdFlight(de.getIdFlight());
-		to.setStatus(de.getStatus());
 		return to;
 	}
 
@@ -33,14 +25,6 @@ public class PassengerMapper {
 		de.setDocType(to.getDocType());
 		de.setDocNumber(to.getDocNumber());
 		de.setNationality(to.getNationality());
-		de.setAge(to.getAge());
-		de.setSex(to.getSex());
-		de.setClassFlight(to.getClassFlight());
-		de.setMenuType(to.getMenuType());
-		de.setMedicalCondition(to.getMedicalCondition());
-		de.setBaggage(to.getBaggage());
-		de.setIdFlight(to.getIdFlight());
-		de.setStatus(to.getStatus());
 		return de;
 	}
 

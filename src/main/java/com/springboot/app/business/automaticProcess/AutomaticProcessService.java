@@ -204,7 +204,7 @@ public class AutomaticProcessService {
 
 					int nxt = ran.nextInt(400);
 
-					carg.setIdPassenger(nxt);
+					carg.setIdPassenger(nxt + 1);
 					carg.setIdVuelo(cargo.getCodigo());
 					carg.setTipo(cargo.getTipo().toUpperCase());
 					carg.setCategoria(cargo.getTag().toUpperCase());
