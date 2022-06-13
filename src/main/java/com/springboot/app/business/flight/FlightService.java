@@ -2,6 +2,7 @@ package com.springboot.app.business.flight;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,16 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.app.business.flight.model.FlightDE;
 import com.springboot.app.business.flight.model.FlightTO;
+import com.springboot.app.bussines.log.model.LogDE;
 import com.springboot.app.repositories.FlightRepository;
+import com.springboot.app.repositories.LogRepository;
 
 @Service
 public class FlightService {
 	@Autowired
 	private FlightRepository flightRepository;
+	@Autowired
+	private LogRepository logRepository;
 	@Autowired
 	private FlightMapper flightMapper;
 
@@ -25,7 +30,18 @@ public class FlightService {
 
 	public List<FlightTO> getFlights() {
 		List<FlightDE> des = flightRepository.findAll();
-		return flightMapper.mapTOList(des);
+		LogDE log = new LogDE();
+		Optional<LogDE> optLog = logRepository.findById("GenerateFlights");
+		if (optLog.isPresent()) {
+			log = optLog.get();
+		}
+		List<FlightTO> list = flightMapper.mapTOList(des);
+
+		String str = log.getLastExecution().toString().replace('T', ' ');
+
+		list.get(0).setExecDate(str);
+
+		return list;
 	}
 
 	public List<FlightTO> getFlightByDate(Date date) {

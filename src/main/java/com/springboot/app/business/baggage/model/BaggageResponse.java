@@ -11,7 +11,8 @@ public class BaggageResponse {
 	private String baggageType;
 	private String weight;
 	private String status;
-	private String isPassengerBaggage;
 	private String docType;
 	private String documentNumber;
+	private String baggageCategory;
+	private String statusCargo;
 }

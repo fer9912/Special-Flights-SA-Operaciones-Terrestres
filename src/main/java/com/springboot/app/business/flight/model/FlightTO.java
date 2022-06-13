@@ -29,5 +29,5 @@ public class FlightTO {
 	private int lubricantConsumption;
 	private String routeCode;
 	private List<String> aircrafts;
-
+	private String execDate;
 }
