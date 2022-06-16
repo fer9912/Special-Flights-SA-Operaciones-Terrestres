@@ -406,7 +406,7 @@ public class FlightRouteMasterService {
 		List<Flight> ret = new ArrayList<>();
 		for (Flight flight : flights) {
 			if (a.equals(flight.getOrigenreal_codiata()) && b.equals(flight.getDestinoreal_codiata())
-					&& "Aterrizado".equals(flight.getEstado().trim())) {
+					&& "finalizado".equals(flight.getEstado().trim())) {
 				ret.add(flight);
 			}
 		}

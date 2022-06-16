@@ -9,6 +9,6 @@ import com.springboot.app.bussines.log.model.LogDE;
 
 public interface LogRepository extends JpaRepository<LogDE, String>, JpaSpecificationExecutor<LogDE> {
 
-	Optional<LogDE> findById(String id);
+	Optional<LogDE> findByProcessName(String id);
 
 }
